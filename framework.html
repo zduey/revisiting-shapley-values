@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Revisiting Shapley Values: A Causal Perspective - 2&nbsp; Evaluation Framework</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./background.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation Framework</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Revisiting Shapley Values: A Causal Perspective</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./framework.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation Framework</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./background.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./explanations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Shapley Explanations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discussion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Discussion</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">Appendix</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation Framework</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>In this section, we propose a human-centric framework for evaluating model explanation methods that is grounded in causal reasoning and the premise that explanations should align with an explainee’s objectives. An evaluation framework is necessary because the multiplicity of available methods makes it impossible to generate every possible explanation, effectively forcing practitioners (explainers) to select a subset of methods. However, to perform this selection in a principled way requires the explainer to define criteria for comparing methods. Since there are innumerable valid criteria, it is helpful to establish a principle, from which, criteria are derived. One approach, leveraged by <span class="citation" data-cites="miller_explanation_2018">Miller (<a href="references.html#ref-miller_explanation_2018" role="doc-biblioref">2018</a>)</span>, is to start from the premise that explanations should mirror human explanations. Consequently, model explanations that more closely resemble human explanations are considered better, which implicitly treats human explanations as a gold standard. In our view, this is a valid, but arguably objectionable standard. Instead, we propose the principle that every explanation should be aligned with the purpose of the explanation as defined by the explainee. The implication is that explanations that are more closely aligned with the explainee’s objectives are better, or more correct, than explanations that are misaligned. In this way, we avoid the pitfalls of prioritizing human-like explanations, while maintaining a human-centric approach.</p>
+<p>To aid practitioners in generating human-centric explanations, we propose a four step process closely modeled after the formulate-approximate-explain (FAE) framework <span class="citation" data-cites="merrick_explanation_2020">Merrick and Taly (<a href="references.html#ref-merrick_explanation_2020" role="doc-biblioref">2020</a>)</span>. First, the explainer and explainee must specify a set of target explanatory questions that explanations should answer. Next, the explainer identifies an explanation-generating method aligned with each question. Third, the explainer generates the explanations and provides them to the explainee. In the final stage, the explanations are interpreted, evaluated, and the cycle may be repeated.</p>
+<p>Every explanation is an answer to a question, so the first step in generating correct model explanations is to specify the question that the explanation should address. In our view, these questions can be elicited by the explainee, but should be governed by the explainee’s objectives. The explainer and explainee’s objectives may not always be aligned <span class="citation" data-cites="mittelstadt_explaining_2019">Mittelstadt, Russell, and Wachter (<a href="references.html#ref-mittelstadt_explaining_2019" role="doc-biblioref">2019</a>)</span>, necessitating a choice over whose objectives to prioritize. In our framework, we prioritize the explainee’s objectives. Since there are many potential explainees, each of which may have different objectives, these questions must be formulated on a per-case basis. A second consideration that the explainer must keep in mind is whether the specified questions are answerable under the relevant constraints of the explanation-generating process. These constraints could involve the explainer’s knowledge of the available methods, the time available for generating explanations, the explainee’s level of domain expertise, the acceptability of the assumptions required to generate the explanation, and many other factors.</p>
+<p>Every target explanatory question has an associated level and type. By level, we refer to the idea introduced earlier that explanations can either consider the model independent of the real world, or attempt to account for real-world relationships. We will address exactly what this means in subsequent sections. A target explanatory question can also be one of three types: associative, interventional, and counterfactual. Together, these groups are referred to as the “ladder of causality” <span class="citation" data-cites="pearl_causality_2009">Pearl (<a href="references.html#ref-pearl_causality_2009" role="doc-biblioref">2009</a>)</span>. Although explanation and causality may seem like separate topics, they are highly intertwined <span class="citation" data-cites="miller_explanation_2018">Miller (<a href="references.html#ref-miller_explanation_2018" role="doc-biblioref">2018</a>)</span>. To make things concrete, consider a model used to predict risk of default as part of a loan application. The following are all possible explanatory questions:</p>
+<ol type="1">
+<li>How did race influence the model’s decision to approve the application?</li>
+<li>What if the user increases their income to <span class="math inline">\(X'\)</span> from <span class="math inline">\(X\)</span>?</li>
+<li>Would my loan application have been approved had my income been <span class="math inline">\(X'\)</span> rather than <span class="math inline">\(X\)</span>?</li>
+</ol>
+<p>Each of these questions implies a different explainee with different objectives: a model auditor interested in assessing the model for potential bias, an employee of the bank trying to understand the model’s behavior, and an individual interested in what might have happened under different circumstances.</p>
+<p>Specifying a target question may require multiple iterations, in particular, to resolve any lingering ambiguity. For example, the intended level of explanation is not immediately clear with the current wording . We suggest that it is the explainer’s responsibility to resolve such ambiguity when possible. In situations where the explainer cannot interact directly with the explainee, the explainer may be forced to make assumptions about the explainees objectives.</p>
+<p>Once the target questions have been specified, the next step is to select an explanation-generating method that addresses each question. In order to make this selection, the explainer must have a clear understanding of the specific types of questions that each method is capable of addressing. In reality, this stage occurs in parallel with the first, as the explainer must keep the association between explanatory methods and the questions they address in mind in order to assess the feasibility of answering the explainee’s target questions. We provide additional details and specific recommendations about which methods are most appropriate in different contexts in our discussion section.</p>
+<p>After a method has been identified, the explainer generates the explanation. The explainer must have a sufficiently deep understanding of the method to accurately assess whether the resulting explanation, when interpreted correctly, addresses the target question. There are a variety of ways that the two may become misaligned. For example, many explanation-generating methods rely on sampling rather than computing exact values such that if the estimator is biased, then the resulting explanations may not address the target question unless certain other assumptions are met. As with the selection step, these considerations should be kept in mind when specifying target questions during the first step. Functionally, this means that the explainer may need to communicate and assess the validity of any additional assumptions that are required at this step while specifying the target questions.</p>
+<p>The final step is for the explainer to provide the explanations to the explainee, and – when possible – engage in a dialog with the explainee about the explanations. This interactive approach to providing explanations is aligned with <span class="citation" data-cites="miller_explanation_2018">Miller (<a href="references.html#ref-miller_explanation_2018" role="doc-biblioref">2018</a>)</span>, who suggests that conversation between explainee and explainer is necessary because XAI is fundamentally a human-agent interaction problem.</p>
+<p>Generating correct explanations requires the explainer to have a deep understanding of the available methods. In particular, the explainer must have a mental catalog of the relevant methods, the types of explanatory questions that each addresses, any required assumptions, and other relevant considerations. Causality is central to this effort because the types of questions that typically motivate the desire for model explanations span the rungs of the ladder of causality.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-merrick_explanation_2020" class="csl-entry" role="doc-biblioentry">
+Merrick, Luke, and Ankur Taly. 2020. <span>“The <span>Explanation</span> <span>Game</span>: <span>Explaining</span> <span>Machine</span> <span>Learning</span> <span>Models</span> <span>Using</span> <span>Shapley</span> <span>Values</span>.”</span> <em>arXiv:1909.08128 [Cs, Stat]</em>, June. <a href="http://arxiv.org/abs/1909.08128">http://arxiv.org/abs/1909.08128</a>.
+</div>
+<div id="ref-miller_explanation_2018" class="csl-entry" role="doc-biblioentry">
+Miller, Tim. 2018. <span>“Explanation in <span>Artificial</span> <span>Intelligence</span>: <span>Insights</span> from the <span>Social</span> <span>Sciences</span>.”</span> <em>arXiv:1706.07269 [Cs]</em>, August. <a href="http://arxiv.org/abs/1706.07269">http://arxiv.org/abs/1706.07269</a>.
+</div>
+<div id="ref-mittelstadt_explaining_2019" class="csl-entry" role="doc-biblioentry">
+Mittelstadt, Brent, Chris Russell, and Sandra Wachter. 2019. <span>“Explaining <span>Explanations</span> in <span>AI</span>.”</span> <em>Proceedings of the Conference on Fairness, Accountability, and Transparency</em>, January, 279–88. <a href="https://doi.org/10.1145/3287560.3287574">https://doi.org/10.1145/3287560.3287574</a>.
+</div>
+<div id="ref-pearl_causality_2009" class="csl-entry" role="doc-biblioentry">
+Pearl, Judea. 2009. <em>Causality: <span>Models</span>, <span>Reasoning</span>, and <span>Inference</span></em>. Second. Cambridge University Press.
+</div>
+</div>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./background.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

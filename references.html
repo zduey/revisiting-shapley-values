@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Revisiting Shapley Values: A Causal Perspective - References</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./appendix.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">References</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Revisiting Shapley Values: A Causal Perspective</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./framework.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation Framework</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./background.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./explanations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Shapley Explanations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discussion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Discussion</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">Appendix</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">References</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-aas_explaining_2020" class="csl-entry" role="doc-biblioentry">
+Aas, Kjersti, Martin Jullum, and Anders Løland. 2020. <span>“Explaining
+Individual Predictions When Features Are Dependent: <span>More</span>
+Accurate Approximations to <span>Shapley</span> Values.”</span>
+<em>arXiv:1903.10464 [Cs, Stat]</em>, February. <a href="http://arxiv.org/abs/1903.10464">http://arxiv.org/abs/1903.10464</a>.
+</div>
+<div id="ref-adler_auditing_2016" class="csl-entry" role="doc-biblioentry">
+Adler, Philip, Casey Falk, Sorelle A. Friedler, Gabriel Rybeck, Carlos
+Scheidegger, Brandon Smith, and Suresh Venkatasubramanian. 2016.
+<span>“Auditing <span>Black</span>-Box <span>Models</span> for
+<span>Indirect</span> <span>Influence</span>.”</span>
+<em>arXiv:1602.07043 [Cs, Stat]</em>, November. <a href="http://arxiv.org/abs/1602.07043">http://arxiv.org/abs/1602.07043</a>.
+</div>
+<div id="ref-basu_shapley_2020" class="csl-entry" role="doc-biblioentry">
+Basu, Debraj. 2020. <span>“On <span>Shapley</span> <span>Credit</span>
+<span>Allocation</span> for <span>Interpretability</span>.”</span>
+<em>arXiv:2012.05506 [Cs, Stat]</em>, December. <a href="http://arxiv.org/abs/2012.05506">http://arxiv.org/abs/2012.05506</a>.
+</div>
+<div id="ref-beckers_causal_2022" class="csl-entry" role="doc-biblioentry">
+Beckers, Sander. 2022. <span>“Causal <span>Explanations</span> and
+<span>XAI</span>.”</span> <em>arXiv:2201.13169 [Cs]</em>, February. <a href="http://arxiv.org/abs/2201.13169">http://arxiv.org/abs/2201.13169</a>.
+</div>
+<div id="ref-castro_polynomial_2009" class="csl-entry" role="doc-biblioentry">
+Castro, Javier, Daniel Gómez, and Juan Tejada. 2009. <span>“Polynomial
+Calculation of the <span>Shapley</span> Value Based on Sampling.”</span>
+<em>Computers &amp; Operations Research</em> 36 (5): 1726–30. <a href="https://doi.org/10.1016/j.cor.2008.04.004">https://doi.org/10.1016/j.cor.2008.04.004</a>.
+</div>
+<div id="ref-chen_true_2020" class="csl-entry" role="doc-biblioentry">
+Chen, Hugh, Joseph D. Janizek, Scott Lundberg, and Su-In Lee. 2020.
+<span>“True to the <span>Model</span> or <span>True</span> to the
+<span>Data</span>?”</span> <em>arXiv:2006.16234 [Cs, Stat]</em>, June.
+<a href="http://arxiv.org/abs/2006.16234">http://arxiv.org/abs/2006.16234</a>.
+</div>
+<div id="ref-covert_explaining_2020" class="csl-entry" role="doc-biblioentry">
+Covert, Ian C. 2020. <span>“Explaining by <span>Removing</span>:
+<span>A</span> <span>Uniﬁed</span> <span>Framework</span> for
+<span>Model</span> <span>Explanation</span>.”</span>
+<em>arXiv:2011.14878 [Cs]</em>, 90.
+</div>
+<div id="ref-datta_algorithmic_2016" class="csl-entry" role="doc-biblioentry">
+Datta, Anupam, Shayak Sen, and Yair Zick. 2016. <span>“Algorithmic
+<span>Transparency</span> via <span>Quantitative</span>
+<span>Input</span> <span>Influence</span>: <span>Theory</span> and
+<span>Experiments</span> with <span>Learning</span>
+<span>Systems</span>.”</span> In <em>2016 <span>IEEE</span>
+<span>Symposium</span> on <span>Security</span> and <span>Privacy</span>
+(<span>SP</span>)</em>, 598–617. <a href="https://doi.org/10.1109/SP.2016.42">https://doi.org/10.1109/SP.2016.42</a>.
+</div>
+<div id="ref-feldman_proportional_2005" class="csl-entry" role="doc-biblioentry">
+Feldman, Barry. 2005. <span>“The <span>Proportional</span>
+<span>Value</span> of a <span>Cooperative</span>
+<span>Game</span>,”</span> 30.
+</div>
+<div id="ref-frye_asymmetric_2020" class="csl-entry" role="doc-biblioentry">
+Frye, Christopher, Colin Rowat, and Ilya Feige. 2020. <span>“Asymmetric
+<span>Shapley</span> Values: Incorporating Causal Knowledge into
+Model-Agnostic Explainability.”</span> <em>arXiv:1910.06358 [Cs,
+Stat]</em>, October. <a href="http://arxiv.org/abs/1910.06358">http://arxiv.org/abs/1910.06358</a>.
+</div>
+<div id="ref-gromping_estimators_2007" class="csl-entry" role="doc-biblioentry">
+Grömping, Ulrike. 2007. <span>“Estimators of <span>Relative</span>
+<span>Importance</span> in <span>Linear</span> <span>Regression</span>
+<span>Based</span> on <span>Variance</span>
+<span>Decomposition</span>.”</span> <em>The American Statistician</em>
+61 (2): 139–47. <a href="https://www.jstor.org/stable/27643865">https://www.jstor.org/stable/27643865</a>.
+</div>
+<div id="ref-halpern_causes_2005-1" class="csl-entry" role="doc-biblioentry">
+Halpern, Joseph Y., and Judea Pearl. 2005a. <span>“Causes and
+<span>Explanations</span>: <span>A</span>
+<span>Structural</span>-<span>Model</span> <span>Approach</span>.
+<span>Part</span> <span>I</span>: <span>Causes</span>.”</span> <em>The
+British Journal for the Philosophy of Science</em> 56 (4): 843–87. <a href="http://www.jstor.org/stable/3541870">http://www.jstor.org/stable/3541870</a>.
+</div>
+<div id="ref-halpern_causes_2005" class="csl-entry" role="doc-biblioentry">
+———. 2005b. <span>“Causes and <span>Explanations</span>: <span>A</span>
+<span>Structural</span>-<span>Model</span> <span>Approach</span>.
+<span>Part</span> <span>II</span>: <span>Explanations</span>.”</span>
+<em>The British Journal for the Philosophy of Science</em> 56 (4):
+889–911. <a href="https://www.jstor.org/stable/3541871">https://www.jstor.org/stable/3541871</a>.
+</div>
+<div id="ref-heskes_causal_2020" class="csl-entry" role="doc-biblioentry">
+Heskes, Tom, Evi Sijben, Ioan Gabriel Bucur, and Tom Claassen. 2020.
+<span>“Causal <span>Shapley</span> <span>Values</span>:
+<span>Exploiting</span> <span>Causal</span> <span>Knowledge</span> to
+<span>Explain</span> <span>Individual</span> <span>Predictions</span> of
+<span>Complex</span> <span>Models</span>.”</span> <em>arXiv:2011.01625
+[Cs]</em>, November. <a href="http://arxiv.org/abs/2011.01625">http://arxiv.org/abs/2011.01625</a>.
+</div>
+<div id="ref-janzing_feature_2019" class="csl-entry" role="doc-biblioentry">
+Janzing, Dominik, Lenon Minorics, and Patrick Blöbaum. 2019.
+<span>“Feature Relevance Quantification in Explainable <span>AI</span>:
+<span>A</span> Causal Problem.”</span> <em>arXiv:1910.13413 [Cs,
+Stat]</em>, November. <a href="http://arxiv.org/abs/1910.13413">http://arxiv.org/abs/1910.13413</a>.
+</div>
+<div id="ref-kilbertus_avoiding_2018" class="csl-entry" role="doc-biblioentry">
+Kilbertus, Niki, Mateo Rojas-Carulla, Giambattista Parascandolo, Moritz
+Hardt, Dominik Janzing, and Bernhard Schölkopf. 2018. <span>“Avoiding
+<span>Discrimination</span> Through <span>Causal</span>
+<span>Reasoning</span>.”</span> <em>arXiv:1706.02744 [Cs, Stat]</em>,
+January. <a href="http://arxiv.org/abs/1706.02744">http://arxiv.org/abs/1706.02744</a>.
+</div>
+<div id="ref-kruskal_relative_1987" class="csl-entry" role="doc-biblioentry">
+Kruskal, William. 1987. <span>“Relative <span>Importance</span> by
+<span>Averaging</span> <span>Over</span> <span>Orderings</span>.”</span>
+<em>The American Statistician</em> 41 (1): 6–10. <a href="https://doi.org/10.2307/2684310">https://doi.org/10.2307/2684310</a>.
+</div>
+<div id="ref-kumar_problems_2020" class="csl-entry" role="doc-biblioentry">
+Kumar, I. Elizabeth, Suresh Venkatasubramanian, Carlos Scheidegger, and
+Sorelle Friedler. 2020. <span>“Problems with
+<span>Shapley</span>-Value-Based Explanations as Feature Importance
+Measures.”</span> <em>arXiv:2002.11097 [Cs, Stat]</em>, June. <a href="http://arxiv.org/abs/2002.11097">http://arxiv.org/abs/2002.11097</a>.
+</div>
+<div id="ref-lindeman_introduction_1980" class="csl-entry" role="doc-biblioentry">
+Lindeman, Richard, Peter Merrenda, and Ruth Gold. 1980. <em>Introduction
+to <span>Bivariate</span> and <span>Multivariate</span>
+<span>Analysis</span></em>. Glenview, IL.
+</div>
+<div id="ref-lipovetsky_analysis_2001" class="csl-entry" role="doc-biblioentry">
+Lipovetsky, Stan, and Michael Conklin. 2001. <span>“Analysis of
+Regression in Game Theory Approach.”</span> <em>Applied Stochastic
+Models in Business and Industry</em> 17 (4): 319–30. <a href="https://doi.org/10.1002/asmb.446">https://doi.org/10.1002/asmb.446</a>.
+</div>
+<div id="ref-lundberg_unified_2017" class="csl-entry" role="doc-biblioentry">
+Lundberg, Scott, and Su-In Lee. 2017. <span>“A <span>Unified</span>
+<span>Approach</span> to <span>Interpreting</span> <span>Model</span>
+<span>Predictions</span>.”</span> <em>arXiv:1705.07874 [Cs, Stat]</em>,
+November. <a href="http://arxiv.org/abs/1705.07874">http://arxiv.org/abs/1705.07874</a>.
+</div>
+<div id="ref-merrick_explanation_2020" class="csl-entry" role="doc-biblioentry">
+Merrick, Luke, and Ankur Taly. 2020. <span>“The <span>Explanation</span>
+<span>Game</span>: <span>Explaining</span> <span>Machine</span>
+<span>Learning</span> <span>Models</span> <span>Using</span>
+<span>Shapley</span> <span>Values</span>.”</span> <em>arXiv:1909.08128
+[Cs, Stat]</em>, June. <a href="http://arxiv.org/abs/1909.08128">http://arxiv.org/abs/1909.08128</a>.
+</div>
+<div id="ref-miller_explanation_2018" class="csl-entry" role="doc-biblioentry">
+Miller, Tim. 2018. <span>“Explanation in <span>Artificial</span>
+<span>Intelligence</span>: <span>Insights</span> from the
+<span>Social</span> <span>Sciences</span>.”</span> <em>arXiv:1706.07269
+[Cs]</em>, August. <a href="http://arxiv.org/abs/1706.07269">http://arxiv.org/abs/1706.07269</a>.
+</div>
+<div id="ref-mittelstadt_explaining_2019" class="csl-entry" role="doc-biblioentry">
+Mittelstadt, Brent, Chris Russell, and Sandra Wachter. 2019.
+<span>“Explaining <span>Explanations</span> in <span>AI</span>.”</span>
+<em>Proceedings of the Conference on Fairness, Accountability, and
+Transparency</em>, January, 279–88. <a href="https://doi.org/10.1145/3287560.3287574">https://doi.org/10.1145/3287560.3287574</a>.
+</div>
+<div id="ref-owen_sobol_2014" class="csl-entry" role="doc-biblioentry">
+Owen, Art B. 2014. <span>“Sobol’ <span>Indices</span> and
+<span>Shapley</span> <span>Value</span>.”</span> <em>SIAM/ASA Journal on
+Uncertainty Quantification</em> 2 (1): 245–51. <a href="https://doi.org/10.1137/130936233">https://doi.org/10.1137/130936233</a>.
+</div>
+<div id="ref-owen_shapley_2017" class="csl-entry" role="doc-biblioentry">
+Owen, Art B., and Clémentine Prieur. 2017. <span>“On
+<span>Shapley</span> <span>Value</span> for <span>Measuring</span>
+<span>Importance</span> of <span>Dependent</span>
+<span>Inputs</span>.”</span> <em>SIAM/ASA Journal on Uncertainty
+Quantification</em> 5 (1): 986–1002. <a href="https://doi.org/10.1137/16M1097717">https://doi.org/10.1137/16M1097717</a>.
+</div>
+<div id="ref-pearl_causality_2009" class="csl-entry" role="doc-biblioentry">
+Pearl, Judea. 2009. <em>Causality: <span>Models</span>,
+<span>Reasoning</span>, and <span>Inference</span></em>. Second.
+Cambridge University Press.
+</div>
+<div id="ref-pearl_causal_2016" class="csl-entry" role="doc-biblioentry">
+Pearl, Judea, Madelyn Glymour, and Nicholas P. Jewell. 2016. <em>Causal
+<span>Inference</span> in <span>Statistics</span>: <span>A</span>
+<span>Primer</span></em>. Wiley.
+</div>
+<div id="ref-shapley_value_1953" class="csl-entry" role="doc-biblioentry">
+Shapley, L. 1953. <span>“A <span>Value</span> for n-<span>Person</span>
+<span>Games</span>.”</span> In <em>Contributions to the
+<span>Theory</span> of <span>Games</span></em>, 2:307–17. Princeton, NJ:
+Princeton University Press.
+</div>
+<div id="ref-singal_flow-based_2021" class="csl-entry" role="doc-biblioentry">
+Singal, Raghav, George Michailidis, and Hoiyi Ng. 2021.
+<span>“Flow-<span>Based</span> <span>Attribution</span> in
+<span>Graphical</span> <span>Models</span>: <span>A</span>
+<span>Recursive</span> <span>Shapley</span>
+<span>Approach</span>.”</span> {SSRN} {Scholarly} {Paper} ID 3845526.
+Rochester, NY: Social Science Research Network. <a href="https://doi.org/10.2139/ssrn.3845526">https://doi.org/10.2139/ssrn.3845526</a>.
+</div>
+<div id="ref-song_shapley_2016" class="csl-entry" role="doc-biblioentry">
+Song, Eunhye, Barry L. Nelson, and Jeremy Staum. 2016. <span>“Shapley
+<span>Effects</span> for <span>Global</span> <span>Sensitivity</span>
+<span>Analysis</span>: <span>Theory</span> and
+<span>Computation</span>.”</span> <em>SIAM/ASA Journal on Uncertainty
+Quantification</em> 4 (1): 1060–83. <a href="https://doi.org/10.1137/15M1048070">https://doi.org/10.1137/15M1048070</a>.
+</div>
+<div id="ref-strumbelj_efficient_2010" class="csl-entry" role="doc-biblioentry">
+Strumbelj, Erik, and Igor Kononenko. 2010. <span>“An
+<span>Efficient</span> <span>Explanation</span> of
+<span>Individual</span> <span>Classifications</span> Using
+<span>Game</span> <span>Theory</span>.”</span> <em>The Journal of
+Machine Learning Research</em> 11 (March): 1–18.
+</div>
+<div id="ref-strumbelj_explaining_2009" class="csl-entry" role="doc-biblioentry">
+Štrumbelj, E., I. Kononenko, and M. Robnik Šikonja. 2009.
+<span>“Explaining Instance Classifications with Interactions of Subsets
+of Feature Values.”</span> <em>Data &amp; Knowledge Engineering</em> 68
+(10): 886–904. <a href="https://doi.org/10.1016/j.datak.2009.01.004">https://doi.org/10.1016/j.datak.2009.01.004</a>.
+</div>
+<div id="ref-strumbelj_explaining_2014" class="csl-entry" role="doc-biblioentry">
+Štrumbelj, Erik, and Igor Kononenko. 2014. <span>“Explaining Prediction
+Models and Individual Predictions with Feature Contributions.”</span>
+<em>Knowledge and Information Systems</em> 41 (3): 647–65. <a href="https://doi.org/10.1007/s10115-013-0679-x">https://doi.org/10.1007/s10115-013-0679-x</a>.
+</div>
+<div id="ref-stufken_hierarchical_1992" class="csl-entry" role="doc-biblioentry">
+Stufken, John. 1992. <span>“On <span>Hierarchical</span>
+<span>Partitioning</span>.”</span> <em>The American Statistician</em> 46
+(1): 70–71. <a href="http://www.jstor.org/stable/2684415">http://www.jstor.org/stable/2684415</a>.
+</div>
+<div id="ref-sundararajan_many_2020" class="csl-entry" role="doc-biblioentry">
+Sundararajan, Mukund, and Amir Najmi. 2020. <span>“The Many
+<span>Shapley</span> Values for Model Explanation.”</span>
+<em>arXiv:1908.08474 [Cs, Econ]</em>, February. <a href="http://arxiv.org/abs/1908.08474">http://arxiv.org/abs/1908.08474</a>.
+</div>
+<div id="ref-viswanathan_model_2021" class="csl-entry" role="doc-biblioentry">
+Viswanathan, Vignesh, and Yair Zick. 2021. <span>“Model
+<span>Explanations</span> via the <span>Axiomatic</span>
+<span>Causal</span> <span>Lens</span>.”</span> <em>arXiv:2109.03890
+[Cs]</em>, September. <a href="http://arxiv.org/abs/2109.03890">http://arxiv.org/abs/2109.03890</a>.
+</div>
+<div id="ref-wachter_counterfactual_2018" class="csl-entry" role="doc-biblioentry">
+Wachter, Sandra, Brent Mittelstadt, and Chris Russell. 2018.
+<span>“Counterfactual <span>Explanations</span> Without
+<span>Opening</span> the <span>Black</span> <span>Box</span>:
+<span>Automated</span> <span>Decisions</span> and the
+<span>GDPR</span>.”</span> <em>arXiv:1711.00399 [Cs]</em>, March. <a href="http://arxiv.org/abs/1711.00399">http://arxiv.org/abs/1711.00399</a>.
+</div>
+<div id="ref-wang_shapley_2021" class="csl-entry" role="doc-biblioentry">
+Wang, Jiaxuan, Jenna Wiens, and Scott Lundberg. 2021. <span>“Shapley
+<span>Flow</span>: <span>A</span> <span>Graph</span>-Based
+<span>Approach</span> to <span>Interpreting</span> <span>Model</span>
+<span>Predictions</span>.”</span> <em>arXiv:2010.14592 [Cs, Stat]</em>,
+February. <a href="http://arxiv.org/abs/2010.14592">http://arxiv.org/abs/2010.14592</a>.
+</div>
+<div id="ref-zhao_causal_2021" class="csl-entry" role="doc-biblioentry">
+Zhao, Qingyuan, and Trevor Hastie. 2021. <span>“Causal
+<span>Interpretations</span> of <span>Black</span>-<span>Box</span>
+<span>Models</span>.”</span> <em>Journal of Business &amp; Economic
+Statistics</em> 39 (1): 272–81. <a href="https://doi.org/10.1080/07350015.2019.1624293">https://doi.org/10.1080/07350015.2019.1624293</a>.
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./appendix.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Appendix</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
