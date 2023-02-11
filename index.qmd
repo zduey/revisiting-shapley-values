@@ -1,8 +1,50 @@
 # Welcome {.unnumbered}
-The following is a version of my master's thesis submitted to the faculties of the Unviersity of Pennsylvania in May 2022. As the title suggests, this work is effectively a literature review, but done through the lens of causality. It is not meant to be a systematic review and is therefore certainly missing many relevant works. It is also not condensed enough to be a conference paper, nor does it provide any novel theoretical contributions. This left it in a precarious spot in terms of outlets for publication. Now that I've had some time away, I decided to simply make it easily accessible in the hopes of getting feedback. In that vein, if you have any feedback about this work, please drop be a note via email (zachduey@gmail.com) or open a [PR](https://github.com/zduey/revisiting-shapley-values).
+The following is a version of my master's thesis submitted to the faculties of
+the Unviersity of Pennsylvania in May 2022. As the title suggests, this work is
+effectively a literature review, but done through the lens of causality. It is
+not meant to be a systematic review and is therefore certainly missing many
+relevant works. It is also not condensed enough to be a conference paper, nor
+does it provide any novel theoretical contributions. This left it in a
+precarious spot in terms of outlets for publication. Now that I've had some
+time away, I decided to simply make it easily accessible in the hopes of
+getting feedback. In that vein, if you have any feedback about this work,
+please drop be a note via email (zachduey@gmail.com) or open a
+[PR](https://github.com/zduey/revisiting-shapley-values).
 
 # Acknowledgements {.unnumbered}
-I am grateful to Lyle Ungar for serving as my supervisor and sheparding this project from its origins as independent study in the Fall of 2021. I would also like to thank Osbert Bastani for co-supervising this work. This work has benefited immensely from collaboration with Tony Liu. I would not have known where to begin without his guidance and would not have gone as deep into the subject without our sessions closely reviewoing many of the papers that form the basis for this work. Finally, I am forver indebted to my wife, Meghan Angelos, who graciously shouldered the burden of being a solo parent while I was pushing to complete this project.
+I am grateful to Lyle Ungar for serving as my supervisor and sheparding this
+project from its origins as independent study in the Fall of 2021. I would also
+like to thank Osbert Bastani for co-supervising this work. This work has
+benefited immensely from collaboration with Tony Liu. I would not have known
+where to begin without his guidance and would not have gone as deep into the
+subject without our sessions closely reviewoing many of the papers that form
+the basis for this work. Finally, I am forver indebted to my wife, Meghan
+Angelos, who graciously shouldered the burden of being a solo parent while I
+was pushing to complete this project.
 
 # Abstract {.unnumbered}
-Shapley values, a concept from cooperative game theory, are used to provide explanations of machine learning models. However, there are many ways to formulate the underlying game, leading to a multitude of Shapley-based methods. The key differentiator between these methods is the value function. Different choices yield substantially different values, which have different interpretations when used as explanations. These differences force practitioners to – oftentimes implicitly – decide which one is correct. To make this decision in an explicit and informed manner requires defining what constitutes a correct explanation. In this work, we revisit existing Shapley explanation methods using a human-centric framework for assessing model explanations. Our framework is grounded in causal reasoning and built on the premise that correct explanations should align with an explainee’s objectives. Selecting an explanation method requires understanding the explainee’s desired level of explanation, whether the explanation desired is based on an associative, interventional, or counterfactual question, and the degree of causal information that the explainee is able to provide. This approach not only surfaces the connection between two ongoing debates in the Shapley explanation literature – whether explanations should be “true to the model” or “true to the data'' and whether functionally-irrelevant features should receive non-zero attributions – but also provides a theoretically-grounded resolution. Moreover, our framework illuminates causality as a conceptual bridge between Shapley explanations and other explanation-generating methods. The connection between causality and explanation is not new, but has implications both for future work on Shapley explanations, and other research areas within explainable AI.
+Shapley values, a concept from cooperative game theory, are used to provide
+explanations of machine learning models. However, there are many ways to
+formulate the underlying game, leading to a multitude of Shapley-based methods.
+The key differentiator between these methods is the value function. Different
+choices yield substantially different values, which have different
+interpretations when used as explanations. These differences force
+practitioners to – oftentimes implicitly – decide which one is correct. To make
+this decision in an explicit and informed manner requires defining what
+constitutes a correct explanation. In this work, we revisit existing Shapley
+explanation methods using a human-centric framework for assessing model
+explanations. Our framework is grounded in causal reasoning and built on the
+premise that correct explanations should align with an explainee’s objectives.
+Selecting an explanation method requires understanding the explainee’s desired
+level of explanation, whether the explanation desired is based on an
+associative, interventional, or counterfactual question, and the degree of
+causal information that the explainee is able to provide. This approach not
+only surfaces the connection between two ongoing debates in the Shapley
+explanation literature – whether explanations should be “true to the model” or
+“true to the data'' and whether functionally-irrelevant features should receive
+non-zero attributions – but also provides a theoretically-grounded resolution.
+Moreover, our framework illuminates causality as a conceptual bridge between
+Shapley explanations and other explanation-generating methods. The connection
+between causality and explanation is not new, but has implications both for
+future work on Shapley explanations, and other research areas within
+explainable AI.

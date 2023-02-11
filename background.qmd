@@ -1,0 +1,398 @@
+# Background
+
+In this section, we briefly review the key concepts from theories of causality and cooperative game theory necessary to
+understand the Shapley-based model explanation literature.
+
+## Causality
+Although explanation and causality may at first appear to be separate topics, they are highly intertwined.
+@miller_explanation_2018 reviews theories of explanation from the social sciences and demonstrates that notions of
+causality are central. While there are different philosophical theories of causality and frameworks for estimating
+causal effects, the XAI literature primarily leverages the formal model of causality introduced by Halpern and Pearl
+(see @halpern_causes_2005-1 and @halpern_causes_2005).
+
+Under this framework, questions are divided into three levels – referred to as the ladder of causality – each of which
+requires a different degree and type of causal information.
+
+At the lowest level are “how” questions, which are associative and can be answered purely from observational data
+without any causal information. The second rung includes “what if'' questions, which involve reasoning about the effects
+of interventions.  These types of questions require either a randomized trial or assumptions about which variables are
+causally related. On the highest wrung are “would have” questions that involve reasoning about counterfactual scenarios,
+that is, what would have occurred had a different action been taken under identical circumstances. These types of
+questions require knowledge of the functional (i.e. mathematical) equations governing each relationship. Intuitively,
+counterfactual questions are distinct from interventional ones because knowing the outcome of the action taken changes
+our beliefs about the likely outcome of other actions under the same circumstances. A more rigorous exploration of these
+different levels and their differences can be found in @pearl_causality_2009. However, we note that for model-level
+explanations, the distinction between interventional and counterfactual questions is functionally irrelevant as the
+model itself is sufficient to answer both types of questions.
+
+In order to apply a causal perspective to Shapley-based model explanations, some familiarity with the formalisms from
+the causality literature is required. The remainder of this section introduces those formalisms in a limited way. For a
+more complete introduction to causal inference, see @pearl_causal_2016. An exhaustive treatment of the topic can be
+found in @pearl_causality_2009.
+
+The primary tool employed to answer “how” questions are conditional probabilities, which require no causal assumptions
+or additional information. For many practitioners, the lack of additional assumptions and an ability to forgo the
+complications involved in causal reasoning may be ideal. However, questions at this level are the least likely to align
+with an explainee’s target questions since human explanations typically involve “why” questions
+(@miller_explanation_2018).
+
+In order to address “what if” questions on the second rung of the ladder of causality, practitioners must provide
+information about the causal relationships between variables. However, since the true causal relationships governing
+natural processes is unknown, this information is better framed as a set of causal assumptions. These assumptions are
+encoded using a formalism called a graphical causal model (GCM), which consists of a set of nodes and edges
+($\mathcal{G} = (V, E)$) that form a directed acyclic graph (DAG). The nodes of a GCM represent variables and each edge
+represents a causal relationship between the two variables. Just as importantly, a missing edge between two variables
+indicates the practitioner’s belief that no causal relationship exists.
+
+A graphical causal model allows a practitioner – under certain conditions – to predict the effects of interventions from
+observational data. Observational data alone is insufficient because correlation between variables has two potential
+sources: either there is a causal relationship between the variables or there is an additional variable (called a
+confounder) that induces a spurious (i.e. non-causal) correlation (see @fig-confounder). To understand how
+to differentiate between the two, it is helpful to first understand how a GCM can be used to predict the dependencies
+between variables.
+
+A graphical causal model is sufficient to determine how two variables are related in observational data corresponding to
+that GCM. Specifically, a GCM can indicate whether two variables are independent, independent conditional on other
+variables, dependent, or dependent conditional on other variables\footnote{There are certain cases where these
+dependencies do not hold, so it is more accurate to say that the variables are _likely_ dependent. For the ease
+of exposition, we exclude this modifier.}. The simplest case are direct relationships, which indicate that two variables
+are unconditionally dependent. To assess implicit dependencies more generally, a GCM can be decomposed into a
+combination of three fundamental building blocks: chains, forks, and colliders (see @fig-gcm-building-blocks). Each
+of these building blocks implies a different set of dependencies, which can be expressed in terms of expectations over
+the random variables involved.
+
+In a chain (@fig-chain), four relationships can be deduced. There are three direct connections. It is also true
+that $Y$ and $X_1$ are independent, conditional on $X_2$.
+
+::: {#fig-gcm-building-blocks layout-ncol=3}
+
+```{dot}
+//| label: fig-chain
+//| fig-cap: Chain
+//| fig-width: 30%
+//| file: figures/chain.dot
+```
+```{dot}
+//| label: fig-fork
+//| fig-cap: Fork
+//| fig-width: 30%
+//| file: figures/fork.dot
+```
+```{dot}
+//| label: fig-collider
+//| fig-cap: Collider
+//| fig-width: 30%
+//| file: figures/collider.dot
+```
+
+Building Blocks of a Graphical Causal Model
+:::
+
+1. $(X_2, X_1)$ are dependent: $E[X_2 | X_1] \neq E[X_2]$
+2. $(Y, X_2)$ are dependent:  $E[Y|X_2] \neq E[Y]$
+3. $(Y, X_1)$ are dependent: $E[Y|X_1] \neq E[Y]$
+4. $(Y, X_1)$ are independent, conditional on $X_2$: $E[Y|X_1, X_2] = E[Y|X_2]$
+
+In a fork @fig-fork, there is a variable $X_1$ that is a common cause of the
+other two. In addition to the the relationships implied by the direct edges, we
+also have the following relationships:
+
+1. $(Y, X_2)$ are dependent: $E[Y|X_2] \neq E[Y]$
+2. $(Y, X_2$ are independent, conditional on $X_1$: $E[Y|X_1, X_2] = E[Y|X_1]$
+
+In a collider @fig-collider, there is a variable $Y$ that is directly
+influenced by both of the other variables. Conditioning on a collider induces
+dependence between two otherwise-independent variables:
+
+1. $X_1$ is independent of $X_2$: $E[X_1|X_2] = E[X_1]$
+2. $X_1$ and $X_2$ are dependent, conditional on $Y$: $E[X_1|X_2, Y] \neq
+   E[X_1|Y]$
+
+Together, these building blocks can be used to construct a complete set of
+dependencies implied by a GCM. The next step is to be able to differentiate
+between causal and non-causal sources of dependence.
+
+Spurious correlations can be identified by looking for "backdoor" paths between
+variables. In @fig-confounder, there is one direct relationship between $X_1$
+and $Y$ and one backdoor path $(X_1 \leftarrow X_2 \rightarrow Y)$. Applying
+the rules above demonstrates how this path introduces additional non-causal
+dependence (correlation). A backdoor path can be closed in two ways:
+conditioning and colliders. The path $X_1 \rightarrow X_2 \rightarrow Y$ is a
+chain and therefore (using the rules from earlier) conditioning on $X_2$ makes
+$X_1$ and $Y$ independent, effectively “closing” that backdoor path. If there
+is a collider along a backdoor path, then that path is closed and conditioning
+on the collider has the negative consequence of opening the backdoor path. When
+there exists a set of variables $\mathbf{Z}$ that close all backdoor paths
+between a pair of variables (e.g. $(X_1, Y)$), the backdoor criterion
+(@pearl_causality_2009) is satisfied and the interventional effect of
+$X_1$ on $Y$ can be estimated. However, the set of variables $\mathbf{Z}$ may
+not exist, meaning that the desired interventional quantity is not identifiable
+from observational data alone.
+
+```{dot}
+//| label: fig-confounder
+//| fig-cap: Confounding in a Graphical Causal Model
+//| file: figures/confounder.dot
+```
+
+Intervening on a variable is equivalent to forcing it to take on some value
+irrespective of the other factors that would typically influence it.
+Graphically, this is equivalent to removing all of the incoming edges to the
+variable. For example, an intervention on $X_1$ in
+@fig-confounding-pre-intervention can be represented graphically by removing
+the edge $(X_1, X_2)$. Importantly, the graphs in
+@fig-confounding-pre-intervention and @fig-confounding-post-intervention imply
+different sets of dependencies, which demonstrates a more general point that an
+interventional conditional distribution is not always equivalent to the
+corresponding observational conditional distribution. Notationally, the
+do-operator (@pearl_causality_2009) is used to differentiate between
+expectations over these two types of distributions: $E[Y=y | do(X_1=x_1)] \neq
+E[Y=y | X_1=x_1]$. To estimate the interventional effect of $X_1$ on $Y$, we
+condition on $X_2$, which closes the only backdoor path $X_1 \leftarrow X_2
+\rightarrow Y$, and therefore satisfies the backdoor criterion.
+
+\begin{align}
+    P(Y = y | do(X_1=x_1) &= \sum_z P(Y=y | X_1=x_1, X_2 = x_2)P(X_2=x_2) \\
+    E[y| do(x_1)] &= \sum_{x_2} E[y|x_1, x_2]p(x_2)
+\end{align}
+
+Provided that a set of variables satisfying the backdoor criterion can be
+identified, a GCM allows a practitioner to predict interventional effects from
+purely observational data thereby addressing “what if” questions on the second
+rung of the ladder of causality. However, a GCM alone is still insufficient to
+answer “why” questions, which require counterfactual reasoning.
+
+::: {#fig-intervention layout-ncol=2}
+
+```{dot}
+//| label: fig-confounding-pre-intervention
+//| fig-cap: Pre-Intervention
+//| fig-width: 45%
+//| file: figures/confounder.dot
+```
+
+```{dot}
+//| label: fig-confounding-post-intervention
+//| fig-cap: Post-Intervention
+//| fig-width: 45%
+//| file: figures/confounder_post_intervention.dot
+```
+
+Interventions Modify the Graphical Causal Model
+:::
+
+In order to evaluate counterfactual scenarios associated with questions at the
+top of the ladder of causality, a structural causal model (SCM) is often
+required. Whereas a GCM only requires information about whether or not causal
+relationships between pairs of variables exist, a SCM requires the functional
+(e.g. mathematical) equations governing those relationships. Formally, a SCM It
+is comprised of four components: a set of exogenous “noise” variables $U$ whose
+values are assumed to be determined outside of the SCM, a joint distribution
+$P_U$ over these exogenous variables, a set of endogenous variables $V$ whose
+values are determined by the SCM, and a set of functions $F = \{f_1, f_2,
+...\}$ where each $f_i$ assigns values to variables in $V$ based on the values
+of the other variables. Every SCM has an associated GCM whose nodes are the
+endogenous variables and the directed edges represent the causal relationships
+captured by the equations in $F$. For simplicity, exogenous variables are
+typically omitted from the GCM. Every endogenous variable must be a descendent
+of at least one exogenous variable and exogenous variables cannot be
+descendants of any other variable. Therefore, each endogenous variable can be
+written as a function of its parents (denoted $Pa(\cdot)$) and the associated
+noise variable:
+
+\begin{equation}
+    X_i = f_i(Pa(X_i), U_i)
+\end{equation}
+
+With this foundation, we can now see how model level questions at any level can
+be addressed using only the model (@fig-levels-of-explanation). For simplicity,
+assume we have just two features $X_1, X_2$ with associated noise terms $U_1,
+U_2$. There are three endogenous variables $V = \{Y, X_1, X_2\}$ representing
+the 2 features and the output of the model. Since we are interested in a model
+level explanation, every feature $X_i$ has an edge pointing to $\hat{Y}$ and no
+other edges between them. Therefore, $f_1, f_2$ are functions of the noise
+terms only and $f_{Y}$ is the model itself, which is deterministic and
+therefore has no additional noise term. The SCM is fully specified, so
+counterfactual questions can be addressed, which means that interventional and
+associative questions are also addressable.
+
+
+::: {#fig-levels-of-explanation layout-ncol=2}
+
+```{dot}
+//| label: fig-model-level
+//| fig-cap: Model Level
+//| fig-width: 45%
+//| file: figures/confounder_post_intervention.dot
+```
+
+```{dot}
+//| label: fig-world-level
+//| fig-cap: World Level
+//| fig-width: 45%
+//| file: figures/confounder.dot
+```
+
+Levels of Explanation
+:::
+
+Following a similar argument, we can also see how world-level explanations
+cannot always be addressed without additional information. Given the same
+setup as in the previous example, but with the edge $(X_2, X_1)$ (see
+@fig-world-level). We now have $Pa(X_1) = \{X_2, U_1\}$, however, we have not
+specified a corresponding function $f_1$ that includes both of these terms.
+Therefore, the SCM is under-specified and counterfactual questions cannot be
+addressed. However, interventional questions can be addressed because there
+exists a set of variables satisfying the backdoor criterion for estimating the
+two interventional quantities of interest: $P(Y = y | do(X_1 = x_1))$ and $P(Y
+= y | do(X_2 = x_2)$. For the first case, we condition on $X_2$ to close the
+backdoor path $(X_1, X_2, Y)$. In the second case, no conditioning is required
+since the post-intervention graph is the same as the pre-intervention graph.
+
+In this section, we reviewed the core components of Pearl-style causality,
+namely, the degree and type of causal information required to address questions
+on different rungs of the ladder of causality. We have also provided an initial
+preview of how these formalisms (GCMs and SCMs) are connected to the task of
+generating model explanations. For explanatory questions targeting world-level
+model explanations, the usual hierarchy of required causal information applies.
+However, for model-level explanations, the model itself is sufficient for
+generating explanations that can address questions at all rungs. Therefore,
+from a causal perspective, understanding the desired level of explanation is
+essential to understand whether any auxiliary causal information is required.
+We will return to these ideas in later sections, but first, some additional
+background on Shapley values is required.
+
+## Shapley Value
+
+Game theory explores the strategic behavior and interactions between rational
+agents in the context of well-defined games. Cooperative game theory is a
+sub-field that focuses on games in which groups of players (coalitions) compete
+against other groups of players and receive a combined payout (gain), or
+alternatively, incur a total cost\footnote{Other work use the terms coalitional
+game theory, and correspondingly, coalitional games}. A cooperative game is
+defined by a set of players called the grand coalition $\mathcal{C} = \{1, 2,
+..., N\}$ and a value function\footnote{Also referred to as a characteristic or
+contribution function} $v$, which specifies the real-valued payout every group
+of players $S \subseteq \mathcal{C}$ receives when they cooperate.  More
+formally, $v$ is a set function $v: \mathcal{P}(C) \rightarrow \mathbb{R}$ such
+that $v(S) \in \mathcal{R}$ and where $\mathcal{P}(\mathcal{C})$ denotes the
+power set of the grand coalition. Since the payout is received by the group,
+there is a further complication regarding how to fairly allocate the group’s
+winnings to individual players, referred to as the attribution problem.
+
+The Shapley value (@shapley_value_1953) is a solution concept from
+cooperative game theory that produces an allocation strategy for fairly
+distributing payoffs to each player in a coalition. It can be viewed as the
+marginal contribution of each player to the coalition, averaged over all
+possible orderings of the players. To build intuition for how this solves the
+attribution problem, consider the following example.
+
+A factory employs three workers $(w_1, w_2, w_3)$, each of whom has agreed to
+be paid in proportional to their contribution to the factory’s widget output.
+Employees are required to work a fixed number of hours each week, but they are
+allowed to set their own schedules. The factory owner has decided to use
+Shapley values to set each employee’s wage and has collected data on factory
+output when different workers are present. In this scenario, the workers are
+the players in the game and the value function is captured by the hourly
+factory production for every combination of workers (see @tbl-productivity).
+
+| workers | widgets/hour |
+|:-------:|:------------:|
+| $\emptyset$ | 0 |
+| $w_1$ | 5 |
+| $w_2$ | 5 |
+| $w_3$ | 5 |
+| $w_1, w_2$ | 8 |
+| $w_1, w_3$ | 10 |
+| $w_2, w_3$ | 6 |
+| $w_1, w_2, w_3$ | 12 |
+
+: Worker Productivity {#tbl-productivity}
+
+The Shapley value for each worker is the number of additional widgets per hour
+(marginal contribution) produced when they arrive at the factory, averaged over
+all possible arrival orders. The marginal contribution of each worker $i$ to a
+coalition $S$ (columns 2-4 of @tbl-productivity) is the additional value
+generated when worker $i$ arrives\footnote{There are different ways to indicate
+the relationship between $i$, $S$, and $v$. For example, $\Delta_v(i, S)$,
+$\Delta_{i, S}(v)$, and $ \Delta_{i, S}$ are all used in the literature.
+However, since a cooperative game is partially defined by the value function,
+we choose to leave the dependence on $v$ implicit in order to simplify the
+notation}.
+
+\begin{equation}
+\label{equation:marginal_value}
+\Delta(i, S) = v(S \cup i) - v(S)
+\end{equation}
+
+Let $\Pi$ denote the set of all orderings of the players in $C$. Given player
+$i$ and a permutation $\pi \in \Pi$, let $S$ be the set of all players
+preceding player $i$ in $\pi$:
+
+\begin{equation}
+\label{equation:arrival_order}
+S_{i, \pi} = \{j: \pi(j) < \pi(i)\}
+\end{equation}
+
+The Shapley value for player $i$ can then be expressed as:
+
+\begin{equation}
+\label{equation:permutation_shapley_formula}
+    \phi(i) = \frac{1}{N!} \sum_{\pi \in \Pi} \Delta(i, S_{i, \pi})
+\end{equation}
+
+The last row of @tbl-sv-by-worker computes the Shapley value for each worker
+(denoted as $\phi_i$) using this formulation, which relies on the information
+in @tbl-productivity.
+
+| order | $\Delta(w_1)$ | $\Delta(w_2)$ | $\Delta(w_3)$ |
+|:-----:|:-------------:|:-------------:|:-------------:|
+| $w_1, w_2, w_3$ | 5 | 3 | 4 |
+| $w_1, w_3, w_2$ | 5 | 2 | 5 |
+| $w_2, w_1, w_3$ | 3 | 5 | 4 |
+| $w_2, w_3, w_1$ | 6 | 5 | 1 |
+| $w_3, w_1, w_2$ | 5 | 2 | 5 |
+| $w_3, w_2, w_1$ | 6 | 1 | 5 |
+| Shapley Value | $\phi_1 = \frac{5+5+3+6+5+6}{6} = 5$ | $\phi_2 = \frac{3+2+5+5+2+1}{6} = 3$ | $\phi_3 = \frac{4+5+2+1+5+5}{6} = 4$ |
+
+: Shapley Value by Worker {#tbl-sv-by-worker}
+
+The Shapley value can be expressed in an equivalent way based on the number of
+unique subsets of the grand coalition $S \subseteq C$ and the number of
+permutations of $C$ for which some ordering of players in $S$ immediately
+precedes the $i$th player. The initial proof of the equivalence of these two
+formulations can be found in @shapley_value_1953 and is reproduced in an
+expanded fashion in @strumbelj_explaining_2009.
+
+\begin{equation}
+\label{equation:alternative_shapley_formula}
+    \phi(i) = \frac{1}{N!} \sum_{S \subseteq C \backslash \{i\}} |S|!(N-|S| - 1)! \Delta(i, S)
+\end{equation}
+
+One of the primary motivations for the use of the Shapley value is that it can
+be derived axiomatically. Given the following three axioms, the Shapley value
+not only solves the attribution problem, but can be shown to be the unique
+solution.
+
+1. **Efficiency**: The Shapley values for individual players sum up to the
+   payout received by the grand coalition: $\sum_{i \in C} \phi(i) = v(C) -
+   v(\emptyset)$.
+2. **Symmetry**: If two players make equal contributions to all possible
+   coalitions, then they should receive equal payouts. For players $i$ and $j$,
+   if $\Delta(i, S) = \Delta(j, S)$ for all subsets $S \subset C$, then
+   $\phi(i) = \phi(j)$.
+3. **Dummy/Nullity/Sensitivity**: If a player's marginal contribution to all
+   coalitions is zero (e.g. they never increase the payout of any coalition),
+   then they should receive zero payout. For any player $i$, if $\Delta(i, S) =
+   0$ for all $S \subset N$, then $\phi(i) = 0$.
+4. **Linearity/Additivity**: Given two games defined by value functions $v$ and
+   $v'$, the Shapley value for each player in the combined game is the sum of
+   the allocations in each individual game: $\phi_{v' + v}(i) = \phi_v(i) +
+   \phi_{v'}(i)$.
+
+While this axiomatic grounding is both powerful and compelling, it is not
+factored into our human-centric evaluation framework and therefore plays a
+rather limited role in our discussion of Shapley-based model explanations. With
+the necessary background on Shapley values and Pearl-style causality in place,
+we are now in a position to examine the Shapley explanation literature using
+this proposed framework.

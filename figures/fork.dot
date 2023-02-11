@@ -1,0 +1,5 @@
+digraph G {
+  layout=dot
+  X1 -> X2;
+  X2 -> Y;
+}
