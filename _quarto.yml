@@ -5,6 +5,7 @@ book:
   title: "Revisiting Shapley Values: A Causal Perspective"
   chapters:
     - index.qmd
+    - intro.qmd
     - references.qmd
 
 bibliography: references.bib
