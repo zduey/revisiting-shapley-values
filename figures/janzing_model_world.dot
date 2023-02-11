@@ -1,0 +1,14 @@
+digraph G {
+  layout=dot
+  node [label=""]
+  x1t [ shape=circle, image="./figures/symbols/x1_tilde.png"]
+  x2t [ shape=circle, image="./figures/symbols/x2_tilde.png"]
+  x1 [ shape=circle, image="./figures/symbols/x1.png"]
+  x2 [ shape=circle, image="./figures/symbols/x2.png"]
+  yhat [ shape=circle, image="./figures/symbols/yhat.png"]
+  
+  x1t -> x1;
+  x2t -> x2;
+  x1 -> yhat;
+  x2 -> yhat;
+}

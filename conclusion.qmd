@@ -1,0 +1,33 @@
+# Conclusion
+In this work, we introduced a human-centric model explanation evaluation
+framework grounded in causal reasoning. Central to this framework is a process
+that starts with eliciting well-defined target explanatory questions. We then
+revisited the Shapley explanation literature in light of this framework,
+highlighting the importance of distinguishing between model and world-level
+explanations. Distinguishing between the two and recognizing the type of
+explanatory question that is of interest to the explainee allows for a more
+principled approach to selecting an appropriate Shapley-based method, or in
+some cases, to determining that a Shapley explanation is not appropriate.
+
+In surveying the Shapley explanation literature, a number of potential avenues
+for future research emerged. First, there is an open question as to whether a
+causal perspective justifies non-Shapley explanation methods in particular
+circumstances. In particular, if a fully-specified SCM can be elicited, then
+should a machine learning approach for generating predictions have been taken
+in the first place? As a second example, if model-level explanations are
+desired, what are the benefits of using Shapley values instead of an individual
+conditional expectation plot (for local explanations) or a partial dependence
+plot (for global explanations)? @zhao_causal_2021 have shown that PDP
+and ICE plots have causal interpretations in situations where the complement
+set satisfies the backdoor criterion.
+
+The debate over reference distributions within the Shapley explanation
+literature has parallels in the counterfactual explanation literature,
+highlighting the need for additional unification efforts within XAI.
+Specifically, @wachter_counterfactual_2018 introduced the notion of
+counterfactual explanations to XAI and advocated for an unconditional
+distribution. Subsequent work has been divided on whether a marginal or
+interventional approach should be taken. These parallels suggest
+that a causal perspective may provide a useful foundation for such unification
+efforts. In fact, there is some work already moving in this direction
+(@viswanathan_model_2021, @beckers_causal_2022).

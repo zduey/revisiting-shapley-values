@@ -200,9 +200,9 @@ descendants of any other variable. Therefore, each endogenous variable can be
 written as a function of its parents (denoted $Pa(\cdot)$) and the associated
 noise variable:
 
-\begin{equation}
-    X_i = f_i(Pa(X_i), U_i)
-\end{equation}
+$$
+X_i = f_i(Pa(X_i), U_i)
+$$
 
 With this foundation, we can now see how model level questions at any level can
 be addressed using only the model (@fig-levels-of-explanation). For simplicity,
@@ -320,26 +320,23 @@ However, since a cooperative game is partially defined by the value function,
 we choose to leave the dependence on $v$ implicit in order to simplify the
 notation}.
 
-\begin{equation}
-\label{equation:marginal_value}
+$$
 \Delta(i, S) = v(S \cup i) - v(S)
-\end{equation}
+$$ {#eq-marginal-value}
 
 Let $\Pi$ denote the set of all orderings of the players in $C$. Given player
 $i$ and a permutation $\pi \in \Pi$, let $S$ be the set of all players
 preceding player $i$ in $\pi$:
 
-\begin{equation}
-\label{equation:arrival_order}
+$$
 S_{i, \pi} = \{j: \pi(j) < \pi(i)\}
-\end{equation}
+$$ {# eq-arrival-order}
 
 The Shapley value for player $i$ can then be expressed as:
 
-\begin{equation}
-\label{equation:permutation_shapley_formula}
-    \phi(i) = \frac{1}{N!} \sum_{\pi \in \Pi} \Delta(i, S_{i, \pi})
-\end{equation}
+$$
+\phi(i) = \frac{1}{N!} \sum_{\pi \in \Pi} \Delta(i, S_{i, \pi})
+$$ {#eq-permutation-shapley-formula}
 
 The last row of @tbl-sv-by-worker computes the Shapley value for each worker
 (denoted as $\phi_i$) using this formulation, which relies on the information
@@ -364,10 +361,9 @@ precedes the $i$th player. The initial proof of the equivalence of these two
 formulations can be found in @shapley_value_1953 and is reproduced in an
 expanded fashion in @strumbelj_explaining_2009.
 
-\begin{equation}
-\label{equation:alternative_shapley_formula}
-    \phi(i) = \frac{1}{N!} \sum_{S \subseteq C \backslash \{i\}} |S|!(N-|S| - 1)! \Delta(i, S)
-\end{equation}
+$$
+\phi(i) = \frac{1}{N!} \sum_{S \subseteq C \backslash \{i\}} |S|!(N-|S| - 1)! \Delta(i, S)
+$$ {#eq-alternative-shapley-formula}
 
 One of the primary motivations for the use of the Shapley value is that it can
 be derived axiomatically. Given the following three axioms, the Shapley value

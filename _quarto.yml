@@ -8,6 +8,10 @@ book:
     - intro.qmd
     - framework.qmd
     - background.qmd
+    - explanations.qmd
+    - discussion.qmd
+    - conclusion.qmd
+    - appendix.qmd
     - references.qmd
 
 bibliography: references.bib

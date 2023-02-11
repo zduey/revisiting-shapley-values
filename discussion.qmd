@@ -1,0 +1,86 @@
+# Discussion
+Now that we have covered the available methods in depth, we are in a position
+to revisit the second stage in our proposed framework, namely, how to select an
+appropriate Shapley explanation method. For a summary of our recommendations
+represented as a decision tree, see @fig-method-selection.
+
+```{mermaid}
+%%| label: fig-method-selection
+%%| fig-cap: Selecting A Shapley-based Method 
+
+flowchart
+  A{Level}
+  A -->|model| B[KernelSHAP]
+  A -->|World| C{question}
+  C -->|associative| D[Conditional KernelSHAP]
+  C -->|interventional| E[CSV]
+  C -->|counterfactual| F[RSV]
+```
+
+As noted previously, the first step in the process is for the explainer to
+specify one or more target explanatory questions aligned with the explainees
+objectives. For each question, the explainer must then consider the following
+three questions:
+
+1. Is the explainee interested in a model or world-level explanation?
+2. Is the target explanatory question associative, interventional, or counterfactual?
+3. What degree of causal information is the explainee able to provide?
+
+To answer the first question, we recommend engaging the explainee to understand
+where a hypothetical intervention, which captures the essence of their
+question, occurs. If a model-level explanation is required, then SSV,
+KernelSHAP, causal-QII, SF, and RSV are all appropriate choices. Due to the
+availability of open-source implementations, the relative simplicity of the
+method, and the fact that no auxiliary information must be provided by the
+explainee, we recommend KernelSHAP.
+
+The second question is only relevant when a world-level explanation is
+required. For associative questions, we recommend either SRV or
+ConditionalKernelSHAP. When the number of features and the dataset are
+relatively small, we recommend SRV because it is an exact method, which limits
+the number of additional considerations that must be taken into account. For
+larger datasets or for models with a large number of features, we suggest
+Conditional KernelSHAP. Again, this recommendation is partially pragmatic due
+to the availability of an open-source implementation, which allows for
+different methods of estimating the required conditional distributions.
+
+For interventional and counterfactual model-level explanations, the explainer
+must be able to provide auxiliary causal information in order for the question
+to be answerable. One way to identify the degree of causal information
+available is to engage the explainee in a process of generating a graphical
+causal model for their application. In the process, it may become clear that
+the explainee is either unable or unwilling to commit to providing such
+information. If the explainee can provide only information to develop the
+limited version of a GCM as required by CSV, then CSV is the clear choice. If a
+full GCM that is consistent with the available data can be elicited, then CSV,
+SF, and RSV are all appropriate. However, we recommend using CSV as it requires
+the least amount of auxiliary information and is more computationally efficient
+than the other two methods.
+
+In exceptional cases, the explainee may be able to provide a full structural
+causal model. If this is the case, it may be worth working with the explainee
+to understand if machine learning is necessary to solve the original problem.
+If an explainee has sufficient domain expertise to generate an SCM, then it is
+unclear why the elicited SCM is not being used in lieu of a learned model.
+Provided the SCM is a valid description of the data generating process, it
+should be able to generate predictions at least as good as the model. Moreover,
+the SCM is sufficient for answering associative, interventional, and
+counterfactual questions that address a different level of explanation
+entirely. Instead of providing world-level _model_ explanations, the SCM
+is sufficient to provide world-level explanations _world_ explanations,
+and specifically, the aspect of the world previously predicted by the model.
+
+It is critical to note that a Shapley explanation may not always be
+appropriate. This could occur for two reasons. First, the answers to the three
+aforementioned questions may not have a corresponding Shapley method. This
+could occur in a situation where the explainee is interested in a world-level
+counterfactual question, but cannot provide the necessary auxiliary causal
+information. At this point, the explainer may explore non-Shapley-based
+explanation methods, or go back to the explainee to identify a different
+explanatory question that is answerable using a Shapley-based method and
+aligned with their objectives. Alternatively, the answers to these questions
+may suggest that an entirely different modeling approach is more appropriate.
+Whether or not this is feasible largely depends on how the explanations will be
+used. For example, if explanations are required to satisfy a regulatory
+requirement for a deployed model, then a better alternative modeling approach
+is irrelevant.
