@@ -39,9 +39,9 @@ the game and groups of players constitute a coalition. When reviewing a
 particular method, we will omit this detail from our discussion except in those
 cases where a different formulation is used.
 
-For the remainder of this paper we use the following notation\footnote{This
+For the remainder of this paper we use the following notation^[This
 notation largely mirrors @kumar_problems_2020 with slight differences to
-improve readability}:
+improve readability]:
 
 - $D$: The set of features $\{1, 2, ..., D\}$
 - $S$: A subset of features, $S \subseteq D$
@@ -265,9 +265,9 @@ explanations.
 
 ### Linear Models
 The earliest Shapley-based model explanation methods were developed to quantify
-relative feature importance for linear models\footnote{See
+relative feature importance for linear models^[See
 @gromping_estimators_2007 or a more detailed overview, which we summarize
-briefly here.}. The first such method (**LMG**) was made known by
+briefly here.]. The first such method (**LMG**) was made known by
 @kruskal_relative_1987, but originated with @lindeman_introduction_1980, who
 suggested that relative feature importance be computed by averaging the
 contributions of each feature to the total variance explained over all possible
@@ -611,7 +611,7 @@ marginalization method than either KernelSHAP or SSV. Second, causal QII is
 motivated by taking an explicitly-causal perspective rather than assuming
 feature independence in order to simplify computing values associated with an
 observational conditional value function. It is this second difference that
-\cite{janzing_feature_2019} are honing in on when they argue that the use of an
+@janzing_feature_2019 are honing in on when they argue that the use of an
 unconditional value function, as implicitly argued by the creators of causal
 QII, is justified by a causal perspective.
 
@@ -625,12 +625,12 @@ observational conditional expectation
 providing (and defending) a full graphical causal model, ASV requires only a
 partial causal ordering of the features. For example, given a set of features
 $X_1, X_2, ..., X_n$, a practitioner may provide the ordering $\{X_1, X_2\}$
-indicating that $X_1$ is a causal ancestor of $X_2$. In \textbf{Distal
-Asymmetric Shapley Values} (d-ASV), this causal information is included by
+indicating that $X_1$ is a causal ancestor of $X_2$. In **Distal
+Asymmetric Shapley Values** (d-ASV), this causal information is included by
 assigning zero weight to any permutations
 (@eq-permutation-shapley-formula})for which $X_2$ precedes $X_1$.
 They argue that this aligns with explanations that attribute effects to root
-causes. Alternatively, \textbf{Proximate Asymmetric Shapley Values} (p-ASV)
+causes. Alternatively, **Proximate Asymmetric Shapley Values** (p-ASV)
 assigns zero weight to any permutations for which $X_1$ precedes $X_2$ such
 that attributions favor immediate causes. The non-uniform weighting of the
 permutations results in values that violate the symmetry axiom, which

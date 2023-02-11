@@ -14,10 +14,10 @@ attributions that violate both the dummy and symmetry Shapley value axioms.
 The first step (formulate) in their framework is to generate a contrastive
 question, which they argue leads to a specific reference or distribution of
 references specific to the use-case. They show how different Shapley-based
-methods can be unified by considering the different choice of \textit{reference
-distribution} used to simulate feature removal. Their notion of a reference
+methods can be unified by considering the different choice of _reference
+distribution_ used to simulate feature removal. Their notion of a reference
 distribution is roughly analogous to RBShap. They also introduce the idea of
-\textit{single reference games}, which simulates feature absence by replacing
+_single reference games_, which simulates feature absence by replacing
 values using a specific reference input (identical to BShap). In the second
 step, the Shapley value is computed in two steps: sampling references from the
 reference distribution and then approximating the average Shapley value for
@@ -29,8 +29,8 @@ estimates as part of the final "explain" stage.
 ## Causal Reasoning and Model Fairness
 
 @kilbertus_avoiding_2018 were the first to make the case that causal
-reasoning is required to assess model fairness\footnote{More specifically, they
-are interested in unresolved discrimination}. In the Shapley value literature,
+reasoning is required to assess model fairness^[More specifically, they
+are interested in unresolved discrimination]. In the Shapley value literature,
 @heskes_causal_2020 demonstrates how different causal structures, even
 if they yield the same observational distribution, can lead to different
 Shapley values. While this is true in general, they provide a concrete example

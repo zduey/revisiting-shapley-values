@@ -53,9 +53,9 @@ between variables.
 
 A graphical causal model is sufficient to determine how two variables are related in observational data corresponding to
 that GCM. Specifically, a GCM can indicate whether two variables are independent, independent conditional on other
-variables, dependent, or dependent conditional on other variables\footnote{There are certain cases where these
+variables, dependent, or dependent conditional on other variables^[There are certain cases where these
 dependencies do not hold, so it is more accurate to say that the variables are _likely_ dependent. For the ease
-of exposition, we exclude this modifier.}. The simplest case are direct relationships, which indicate that two variables
+of exposition, we exclude this modifier.]. The simplest case are direct relationships, which indicate that two variables
 are unconditionally dependent. To assess implicit dependencies more generally, a GCM can be decomposed into a
 combination of three fundamental building blocks: chains, forks, and colliders (see @fig-gcm-building-blocks). Each
 of these building blocks implies a different set of dependencies, which can be expressed in terms of expectations over
@@ -268,11 +268,11 @@ Game theory explores the strategic behavior and interactions between rational
 agents in the context of well-defined games. Cooperative game theory is a
 sub-field that focuses on games in which groups of players (coalitions) compete
 against other groups of players and receive a combined payout (gain), or
-alternatively, incur a total cost\footnote{Other work use the terms coalitional
-game theory, and correspondingly, coalitional games}. A cooperative game is
+alternatively, incur a total cost^[Other work use the terms coalitional
+game theory, and correspondingly, coalitional games]. A cooperative game is
 defined by a set of players called the grand coalition $\mathcal{C} = \{1, 2,
-..., N\}$ and a value function\footnote{Also referred to as a characteristic or
-contribution function} $v$, which specifies the real-valued payout every group
+..., N\}$ and a value function^[Also referred to as a characteristic or
+contribution function] $v$, which specifies the real-valued payout every group
 of players $S \subseteq \mathcal{C}$ receives when they cooperate.  More
 formally, $v$ is a set function $v: \mathcal{P}(C) \rightarrow \mathbb{R}$ such
 that $v(S) \in \mathcal{R}$ and where $\mathcal{P}(\mathcal{C})$ denotes the
@@ -313,12 +313,12 @@ The Shapley value for each worker is the number of additional widgets per hour
 (marginal contribution) produced when they arrive at the factory, averaged over
 all possible arrival orders. The marginal contribution of each worker $i$ to a
 coalition $S$ (columns 2-4 of @tbl-productivity) is the additional value
-generated when worker $i$ arrives\footnote{There are different ways to indicate
+generated when worker $i$ arrives^[There are different ways to indicate
 the relationship between $i$, $S$, and $v$. For example, $\Delta_v(i, S)$,
 $\Delta_{i, S}(v)$, and $ \Delta_{i, S}$ are all used in the literature.
 However, since a cooperative game is partially defined by the value function,
 we choose to leave the dependence on $v$ implicit in order to simplify the
-notation}.
+notation].
 
 $$
 \Delta(i, S) = v(S \cup i) - v(S)
