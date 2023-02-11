@@ -1,0 +1,16 @@
+project:
+  type: book
+
+book:
+  title: "Revisiting Shapley Values: A Causal Perspective"
+  chapters:
+    - index.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: flatly
+  pdf:
+    documentclass: scrreprt
