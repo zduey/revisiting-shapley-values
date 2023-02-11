@@ -6,9 +6,9 @@ not meant to be a systematic review and is therefore certainly missing many
 relevant works. It is also not condensed enough to be a conference paper, nor
 does it provide any novel theoretical contributions. This left it in a
 precarious spot in terms of outlets for publication. Now that I've had some
-time away, I decided to simply make it easily accessible in the hopes of
-getting feedback. In that vein, if you have any feedback about this work,
-please drop be a note via email (zachduey@gmail.com) or open a
+time away from the project, I've decided to simply make it easily accessible in
+the hopes of getting feedback. In that vein, if you have any feedback about
+this work, please drop me a note via email (zachduey@gmail.com) or open a
 [PR](https://github.com/zduey/revisiting-shapley-values).
 
 # Acknowledgements {.unnumbered}
