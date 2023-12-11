@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,10 +76,21 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-317KRPWML8"></script>
 
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -88,11 +99,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./background.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -100,75 +116,85 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Revisiting Shapley Values: A Causal Perspective</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./framework.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation Framework</span></a>
+  <a href="./framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation Framework</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./background.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></a>
+  <a href="./background.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./explanations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Shapley Explanations</span></a>
+  <a href="./explanations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Shapley Explanations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discussion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Discussion</span></a>
+  <a href="./discussion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Discussion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix.html" class="sidebar-item-text sidebar-link">Appendix</a>
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#causality" id="toc-causality" class="nav-link active" data-scroll-target="#causality"><span class="toc-section-number">3.1</span>  Causality</a></li>
-  <li><a href="#shapley-value" id="toc-shapley-value" class="nav-link" data-scroll-target="#shapley-value"><span class="toc-section-number">3.2</span>  Shapley Value</a></li>
+  <li><a href="#causality" id="toc-causality" class="nav-link active" data-scroll-target="#causality"><span class="header-section-number">3.1</span> Causality</a></li>
+  <li><a href="#shapley-value" id="toc-shapley-value" class="nav-link" data-scroll-target="#shapley-value"><span class="header-section-number">3.2</span> Shapley Value</a></li>
   </ul>
 </nav>
     </div>
@@ -177,7 +203,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></h1>
 </div>
 
 
@@ -211,8 +237,8 @@ div.csl-indent {
 <div class="cell-output-display">
 <div id="fig-chain" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="NaN" height="480" viewbox="0.00 0.00 62.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="NaN" height="480" viewbox="0.00 0.00 62.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
 <title>
 G
@@ -239,8 +265,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M27,-71.7C27,-63.98 27,-54.71 27,-46.11"></path> <polygon fill="black" stroke="black" points="30.5,-46.1 27,-36.1 23.5,-46.1 30.5,-46.1"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">(a) Chain</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">(a) Chain</figcaption>
 </figure>
 </div>
 </div>
@@ -249,8 +275,8 @@ X2-&gt;Y
 <div class="cell-output-display">
 <div id="fig-fork" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="NaN" height="480" viewbox="0.00 0.00 62.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="NaN" height="480" viewbox="0.00 0.00 62.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
 <title>
 G
@@ -277,8 +303,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M27,-71.7C27,-63.98 27,-54.71 27,-46.11"></path> <polygon fill="black" stroke="black" points="30.5,-46.1 27,-36.1 23.5,-46.1 30.5,-46.1"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">(b) Fork</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">(b) Fork</figcaption>
 </figure>
 </div>
 </div>
@@ -287,8 +313,8 @@ X2-&gt;Y
 <div class="cell-output-display">
 <div id="fig-collider" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
 <title>
 G
@@ -315,8 +341,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path> <polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">(c) Collider</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">(c) Collider</figcaption>
 </figure>
 </div>
 </div>
@@ -347,8 +373,8 @@ X2-&gt;Y
 <div class="cell-output-display">
 <div id="fig-confounder" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="672" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
 <title>
 G
@@ -379,8 +405,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path> <polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.2: Confounding in a Graphical Causal Model</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;3.2: Confounding in a Graphical Causal Model</figcaption>
 </figure>
 </div>
 </div>
@@ -398,8 +424,8 @@ X2-&gt;Y
 <div class="cell-output-display">
 <div id="fig-confounding-pre-intervention" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="NaN" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="NaN" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
 <title>
 G
@@ -430,8 +456,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path> <polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">(a) Pre-Intervention</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">(a) Pre-Intervention</figcaption>
 </figure>
 </div>
 </div>
@@ -440,8 +466,8 @@ X2-&gt;Y
 <div class="cell-output-display">
 <div id="fig-confounding-post-intervention" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
 <title>
 G
@@ -468,8 +494,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path> <polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">(b) Post-Intervention</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">(b) Post-Intervention</figcaption>
 </figure>
 </div>
 </div>
@@ -490,8 +516,8 @@ X_i = f_i(Pa(X_i), U_i)
 <div class="cell-output-display">
 <div id="fig-model-level" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
 <title>
 G
@@ -518,8 +544,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path> <polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">(a) Model Level</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">(a) Model Level</figcaption>
 </figure>
 </div>
 </div>
@@ -528,8 +554,8 @@ X2-&gt;Y
 <div class="cell-output-display">
 <div id="fig-world-level" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p>
-<svg width="NaN" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<div>
+<svg width="NaN" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
 <title>
 G
@@ -560,8 +586,8 @@ X2-&gt;Y
 </title>
 <path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path> <polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon> </g> </g>
 </svg>
-</p>
-<p></p><figcaption class="figure-caption">(b) World Level</figcaption><p></p>
+</div>
+<figcaption class="figure-caption">(b) World Level</figcaption>
 </figure>
 </div>
 </div>
@@ -713,26 +739,26 @@ S_{i, \pi} = \{j: \pi(j) &lt; \pi(i)\}
 <p>While this axiomatic grounding is both powerful and compelling, it is not factored into our human-centric evaluation framework and therefore plays a rather limited role in our discussion of Shapley-based model explanations. With the necessary background on Shapley values and Pearl-style causality in place, we are now in a position to examine the Shapley explanation literature using this proposed framework.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-halpern_causes_2005-1" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-halpern_causes_2005-1" class="csl-entry" role="listitem">
 Halpern, Joseph Y., and Judea Pearl. 2005a. <span>“Causes and <span>Explanations</span>: <span>A</span> <span>Structural</span>-<span>Model</span> <span>Approach</span>. <span>Part</span> <span>I</span>: <span>Causes</span>.”</span> <em>The British Journal for the Philosophy of Science</em> 56 (4): 843–87. <a href="http://www.jstor.org/stable/3541870">http://www.jstor.org/stable/3541870</a>.
 </div>
-<div id="ref-halpern_causes_2005" class="csl-entry" role="doc-biblioentry">
+<div id="ref-halpern_causes_2005" class="csl-entry" role="listitem">
 ———. 2005b. <span>“Causes and <span>Explanations</span>: <span>A</span> <span>Structural</span>-<span>Model</span> <span>Approach</span>. <span>Part</span> <span>II</span>: <span>Explanations</span>.”</span> <em>The British Journal for the Philosophy of Science</em> 56 (4): 889–911. <a href="https://www.jstor.org/stable/3541871">https://www.jstor.org/stable/3541871</a>.
 </div>
-<div id="ref-miller_explanation_2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-miller_explanation_2018" class="csl-entry" role="listitem">
 Miller, Tim. 2018. <span>“Explanation in <span>Artificial</span> <span>Intelligence</span>: <span>Insights</span> from the <span>Social</span> <span>Sciences</span>.”</span> <em>arXiv:1706.07269 [Cs]</em>, August. <a href="http://arxiv.org/abs/1706.07269">http://arxiv.org/abs/1706.07269</a>.
 </div>
-<div id="ref-pearl_causality_2009" class="csl-entry" role="doc-biblioentry">
+<div id="ref-pearl_causality_2009" class="csl-entry" role="listitem">
 Pearl, Judea. 2009. <em>Causality: <span>Models</span>, <span>Reasoning</span>, and <span>Inference</span></em>. Second. Cambridge University Press.
 </div>
-<div id="ref-pearl_causal_2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-pearl_causal_2016" class="csl-entry" role="listitem">
 Pearl, Judea, Madelyn Glymour, and Nicholas P. Jewell. 2016. <em>Causal <span>Inference</span> in <span>Statistics</span>: <span>A</span> <span>Primer</span></em>. Wiley.
 </div>
-<div id="ref-shapley_value_1953" class="csl-entry" role="doc-biblioentry">
+<div id="ref-shapley_value_1953" class="csl-entry" role="listitem">
 Shapley, L. 1953. <span>“A <span>Value</span> for n-<span>Person</span> <span>Games</span>.”</span> In <em>Contributions to the <span>Theory</span> of <span>Games</span></em>, 2:307–17. Princeton, NJ: Princeton University Press.
 </div>
-<div id="ref-strumbelj_explaining_2009" class="csl-entry" role="doc-biblioentry">
+<div id="ref-strumbelj_explaining_2009" class="csl-entry" role="listitem">
 Štrumbelj, E., I. Kononenko, and M. Robnik Šikonja. 2009. <span>“Explaining Instance Classifications with Interactions of Subsets of Feature Values.”</span> <em>Data &amp; Knowledge Engineering</em> 68 (10): 886–904. <a href="https://doi.org/10.1016/j.datak.2009.01.004">https://doi.org/10.1016/j.datak.2009.01.004</a>.
 </div>
 </div>
@@ -775,9 +801,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -842,6 +882,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
