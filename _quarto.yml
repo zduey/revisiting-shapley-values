@@ -13,6 +13,7 @@ book:
     - conclusion.qmd
     - appendix.qmd
     - references.qmd
+  google-analytics: "G-317KRPWML8"
 
 bibliography: references.bib
 
