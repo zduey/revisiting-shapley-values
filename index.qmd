@@ -1,6 +1,6 @@
 # Welcome {.unnumbered}
 The following is a version of my master's thesis submitted to the faculties of
-the Unviersity of Pennsylvania in May 2022. As the title suggests, this work is
+the University of Pennsylvania in May 2022. As the title suggests, this work is
 effectively a literature review, but done through the lens of causality. It is
 not meant to be a systematic review and is therefore certainly missing many
 relevant works. It is also not condensed enough to be a conference paper, nor
