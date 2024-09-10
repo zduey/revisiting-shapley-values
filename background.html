@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Revisiting Shapley Values: A Causal Perspective - 3&nbsp; Background</title>
+<title>3&nbsp; Background – Revisiting Shapley Values: A Causal Perspective</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -66,7 +67,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -75,6 +82,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -90,8 +98,35 @@ gtag('js', new Date());
 gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -101,13 +136,13 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./background.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./background.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -116,7 +151,7 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Revisiting Shapley Values: A Causal Perspective</a> 
@@ -186,7 +221,7 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -216,7 +251,9 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
   </div>
   
 
+
 </header>
+
 
 <p>In this section, we briefly review the key concepts from theories of causality and cooperative game theory necessary to understand the Shapley-based model explanation literature.</p>
 <section id="causality" class="level2" data-number="3.1">
@@ -227,128 +264,171 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
 <p>In order to apply a causal perspective to Shapley-based model explanations, some familiarity with the formalisms from the causality literature is required. The remainder of this section introduces those formalisms in a limited way. For a more complete introduction to causal inference, see <span class="citation" data-cites="pearl_causal_2016">Pearl, Glymour, and Jewell (<a href="references.html#ref-pearl_causal_2016" role="doc-biblioref">2016</a>)</span>. An exhaustive treatment of the topic can be found in <span class="citation" data-cites="pearl_causality_2009">Pearl (<a href="references.html#ref-pearl_causality_2009" role="doc-biblioref">2009</a>)</span>.</p>
 <p>The primary tool employed to answer “how” questions are conditional probabilities, which require no causal assumptions or additional information. For many practitioners, the lack of additional assumptions and an ability to forgo the complications involved in causal reasoning may be ideal. However, questions at this level are the least likely to align with an explainee’s target questions since human explanations typically involve “why” questions (<span class="citation" data-cites="miller_explanation_2018">Miller (<a href="references.html#ref-miller_explanation_2018" role="doc-biblioref">2018</a>)</span>).</p>
 <p>In order to address “what if” questions on the second rung of the ladder of causality, practitioners must provide information about the causal relationships between variables. However, since the true causal relationships governing natural processes is unknown, this information is better framed as a set of causal assumptions. These assumptions are encoded using a formalism called a graphical causal model (GCM), which consists of a set of nodes and edges (<span class="math inline">\(\mathcal{G} = (V, E)\)</span>) that form a directed acyclic graph (DAG). The nodes of a GCM represent variables and each edge represents a causal relationship between the two variables. Just as importantly, a missing edge between two variables indicates the practitioner’s belief that no causal relationship exists.</p>
-<p>A graphical causal model allows a practitioner – under certain conditions – to predict the effects of interventions from observational data. Observational data alone is insufficient because correlation between variables has two potential sources: either there is a causal relationship between the variables or there is an additional variable (called a confounder) that induces a spurious (i.e.&nbsp;non-causal) correlation (see <a href="#fig-confounder">Figure&nbsp;<span>3.2</span></a>). To understand how to differentiate between the two, it is helpful to first understand how a GCM can be used to predict the dependencies between variables.</p>
-<p>A graphical causal model is sufficient to determine how two variables are related in observational data corresponding to that GCM. Specifically, a GCM can indicate whether two variables are independent, independent conditional on other variables, dependent, or dependent conditional on other variables<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The simplest case are direct relationships, which indicate that two variables are unconditionally dependent. To assess implicit dependencies more generally, a GCM can be decomposed into a combination of three fundamental building blocks: chains, forks, and colliders (see <a href="#fig-gcm-building-blocks">Figure&nbsp;<span>3.1</span></a>). Each of these building blocks implies a different set of dependencies, which can be expressed in terms of expectations over the random variables involved.</p>
-<p>In a chain (<a href="#fig-chain">Figure&nbsp;<span>3.1 (a)</span></a>), four relationships can be deduced. There are three direct connections. It is also true that <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1\)</span> are independent, conditional on <span class="math inline">\(X_2\)</span>.</p>
+<p>A graphical causal model allows a practitioner – under certain conditions – to predict the effects of interventions from observational data. Observational data alone is insufficient because correlation between variables has two potential sources: either there is a causal relationship between the variables or there is an additional variable (called a confounder) that induces a spurious (i.e.&nbsp;non-causal) correlation (see <a href="#fig-confounder" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>). To understand how to differentiate between the two, it is helpful to first understand how a GCM can be used to predict the dependencies between variables.</p>
+<p>A graphical causal model is sufficient to determine how two variables are related in observational data corresponding to that GCM. Specifically, a GCM can indicate whether two variables are independent, independent conditional on other variables, dependent, or dependent conditional on other variables<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The simplest case are direct relationships, which indicate that two variables are unconditionally dependent. To assess implicit dependencies more generally, a GCM can be decomposed into a combination of three fundamental building blocks: chains, forks, and colliders (see <a href="#fig-gcm-building-blocks" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>). Each of these building blocks implies a different set of dependencies, which can be expressed in terms of expectations over the random variables involved.</p>
+<p>In a chain (<a href="#fig-chain" class="quarto-xref">Figure&nbsp;<span>3.1 (a)</span></a>), four relationships can be deduced. There are three direct connections. It is also true that <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1\)</span> are independent, conditional on <span class="math inline">\(X_2\)</span>.</p>
 <div id="fig-gcm-building-blocks" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-fig-width="30%" data-file="figures/chain.dot" style="flex-basis: 33.3%;justify-content: center;">
-<div class="cell-output-display">
-<div id="fig-chain" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gcm-building-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell quarto-layout-cell-subref quarto-layout-cell" data-fig-width="30%" data-file="figures/chain.dot" data-ref-parent="fig-gcm-building-blocks" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-gcm-building-blocks">
+<div id="fig-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="NaN" height="480" viewbox="0.00 0.00 62.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 58,-184 58,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-162" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-157.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- X2 --> <g id="node2" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge1" class="edge">
-<title>
-X1-&gt;X2
-</title>
-<path fill="none" stroke="black" d="M27,-143.7C27,-135.98 27,-126.71 27,-118.11"></path> <polygon fill="black" stroke="black" points="30.5,-118.1 27,-108.1 23.5,-118.1 30.5,-118.1"></polygon> </g> <!-- Y --> <g id="node3" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M27,-71.7C27,-63.98 27,-54.71 27,-46.11"></path> <polygon fill="black" stroke="black" points="30.5,-46.1 27,-36.1 23.5,-46.1 30.5,-46.1"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 58,-184 58,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-157.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X1&#45;&gt;X2 -->
+<g id="edge1" class="edge">
+<title>X1-&gt;X2</title>
+<path fill="none" stroke="black" d="M27,-143.7C27,-135.98 27,-126.71 27,-118.11"></path>
+<polygon fill="black" stroke="black" points="30.5,-118.1 27,-108.1 23.5,-118.1 30.5,-118.1"></polygon>
+</g>
+<!-- Y -->
+<g id="node3" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M27,-71.7C27,-63.98 27,-54.71 27,-46.11"></path>
+<polygon fill="black" stroke="black" points="30.5,-46.1 27,-36.1 23.5,-46.1 30.5,-46.1"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">(a) Chain</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Chain
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-fig-width="30%" data-file="figures/fork.dot" style="flex-basis: 33.3%;justify-content: center;">
-<div class="cell-output-display">
-<div id="fig-fork" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div class="cell quarto-layout-cell-subref quarto-layout-cell" data-fig-width="30%" data-file="figures/fork.dot" data-ref-parent="fig-gcm-building-blocks" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-gcm-building-blocks">
+<div id="fig-fork" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="NaN" height="480" viewbox="0.00 0.00 62.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 58,-184 58,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-162" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-157.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- X2 --> <g id="node2" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge1" class="edge">
-<title>
-X1-&gt;X2
-</title>
-<path fill="none" stroke="black" d="M27,-143.7C27,-135.98 27,-126.71 27,-118.11"></path> <polygon fill="black" stroke="black" points="30.5,-118.1 27,-108.1 23.5,-118.1 30.5,-118.1"></polygon> </g> <!-- Y --> <g id="node3" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M27,-71.7C27,-63.98 27,-54.71 27,-46.11"></path> <polygon fill="black" stroke="black" points="30.5,-46.1 27,-36.1 23.5,-46.1 30.5,-46.1"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 58,-184 58,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-157.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X1&#45;&gt;X2 -->
+<g id="edge1" class="edge">
+<title>X1-&gt;X2</title>
+<path fill="none" stroke="black" d="M27,-143.7C27,-135.98 27,-126.71 27,-118.11"></path>
+<polygon fill="black" stroke="black" points="30.5,-118.1 27,-108.1 23.5,-118.1 30.5,-118.1"></polygon>
+</g>
+<!-- Y -->
+<g id="node3" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M27,-71.7C27,-63.98 27,-54.71 27,-46.11"></path>
+<polygon fill="black" stroke="black" points="30.5,-46.1 27,-36.1 23.5,-46.1 30.5,-46.1"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">(b) Fork</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Fork
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-fig-width="30%" data-file="figures/collider.dot" style="flex-basis: 33.3%;justify-content: center;">
-<div class="cell-output-display">
-<div id="fig-collider" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div class="cell quarto-layout-cell-subref quarto-layout-cell" data-fig-width="30%" data-file="figures/collider.dot" data-ref-parent="fig-gcm-building-blocks" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-gcm-building-blocks">
+<div id="fig-collider" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-collider-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 130,-112 130,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node2" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="63" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
-<title>
-X1-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M35.35,-72.76C39.71,-64.28 45.15,-53.71 50.04,-44.2"></path> <polygon fill="black" stroke="black" points="53.23,-45.64 54.7,-35.15 47.01,-42.44 53.23,-45.64"></polygon> </g> <!-- X2 --> <g id="node3" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="99" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path> <polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 130,-112 130,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- Y -->
+<g id="node2" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="63" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M35.35,-72.76C39.71,-64.28 45.15,-53.71 50.04,-44.2"></path>
+<polygon fill="black" stroke="black" points="53.23,-45.64 54.7,-35.15 47.01,-42.44 53.23,-45.64"></polygon>
+</g>
+<!-- X2 -->
+<g id="node3" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="99" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path>
+<polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">(c) Collider</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-collider-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Collider
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.1: Building Blocks of a Graphical Causal Model</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gcm-building-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Building Blocks of a Graphical Causal Model
+</figcaption>
 </figure>
 </div>
 <ol type="1">
@@ -357,256 +437,346 @@ X2-&gt;Y
 <li><span class="math inline">\((Y, X_1)\)</span> are dependent: <span class="math inline">\(E[Y|X_1] \neq E[Y]\)</span></li>
 <li><span class="math inline">\((Y, X_1)\)</span> are independent, conditional on <span class="math inline">\(X_2\)</span>: <span class="math inline">\(E[Y|X_1, X_2] = E[Y|X_2]\)</span></li>
 </ol>
-<p>In a fork <a href="#fig-fork">Figure&nbsp;<span>3.1 (b)</span></a>, there is a variable <span class="math inline">\(X_1\)</span> that is a common cause of the other two. In addition to the the relationships implied by the direct edges, we also have the following relationships:</p>
+<p>In a fork <a href="#fig-fork" class="quarto-xref">Figure&nbsp;<span>3.1 (b)</span></a>, there is a variable <span class="math inline">\(X_1\)</span> that is a common cause of the other two. In addition to the the relationships implied by the direct edges, we also have the following relationships:</p>
 <ol type="1">
 <li><span class="math inline">\((Y, X_2)\)</span> are dependent: <span class="math inline">\(E[Y|X_2] \neq E[Y]\)</span></li>
 <li><span class="math inline">\((Y, X_2\)</span> are independent, conditional on <span class="math inline">\(X_1\)</span>: <span class="math inline">\(E[Y|X_1, X_2] = E[Y|X_1]\)</span></li>
 </ol>
-<p>In a collider <a href="#fig-collider">Figure&nbsp;<span>3.1 (c)</span></a>, there is a variable <span class="math inline">\(Y\)</span> that is directly influenced by both of the other variables. Conditioning on a collider induces dependence between two otherwise-independent variables:</p>
+<p>In a collider <a href="#fig-collider" class="quarto-xref">Figure&nbsp;<span>3.1 (c)</span></a>, there is a variable <span class="math inline">\(Y\)</span> that is directly influenced by both of the other variables. Conditioning on a collider induces dependence between two otherwise-independent variables:</p>
 <ol type="1">
 <li><span class="math inline">\(X_1\)</span> is independent of <span class="math inline">\(X_2\)</span>: <span class="math inline">\(E[X_1|X_2] = E[X_1]\)</span></li>
-<li><span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are dependent, conditional on <span class="math inline">\(Y\)</span>: <span class="math inline">\(E[X_1|X_2, Y] \neq E[X_1|Y]\)</span></li>
+<li><span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are dependent, conditional on <span class="math inline">\(Y\)</span>: <span class="math inline">\(E[X_1|X_2, Y] \neq
+E[X_1|Y]\)</span></li>
 </ol>
 <p>Together, these building blocks can be used to construct a complete set of dependencies implied by a GCM. The next step is to be able to differentiate between causal and non-causal sources of dependence.</p>
-<p>Spurious correlations can be identified by looking for “backdoor” paths between variables. In <a href="#fig-confounder">Figure&nbsp;<span>3.2</span></a>, there is one direct relationship between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span> and one backdoor path <span class="math inline">\((X_1 \leftarrow X_2 \rightarrow Y)\)</span>. Applying the rules above demonstrates how this path introduces additional non-causal dependence (correlation). A backdoor path can be closed in two ways: conditioning and colliders. The path <span class="math inline">\(X_1 \rightarrow X_2 \rightarrow Y\)</span> is a chain and therefore (using the rules from earlier) conditioning on <span class="math inline">\(X_2\)</span> makes <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span> independent, effectively “closing” that backdoor path. If there is a collider along a backdoor path, then that path is closed and conditioning on the collider has the negative consequence of opening the backdoor path. When there exists a set of variables <span class="math inline">\(\mathbf{Z}\)</span> that close all backdoor paths between a pair of variables (e.g.&nbsp;<span class="math inline">\((X_1, Y)\)</span>), the backdoor criterion (<span class="citation" data-cites="pearl_causality_2009">Pearl (<a href="references.html#ref-pearl_causality_2009" role="doc-biblioref">2009</a>)</span>) is satisfied and the interventional effect of <span class="math inline">\(X_1\)</span> on <span class="math inline">\(Y\)</span> can be estimated. However, the set of variables <span class="math inline">\(\mathbf{Z}\)</span> may not exist, meaning that the desired interventional quantity is not identifiable from observational data alone.</p>
-<div class="cell" data-file="figures/confounder.dot">
+<p>Spurious correlations can be identified by looking for “backdoor” paths between variables. In <a href="#fig-confounder" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>, there is one direct relationship between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span> and one backdoor path <span class="math inline">\((X_1 \leftarrow X_2 \rightarrow Y)\)</span>. Applying the rules above demonstrates how this path introduces additional non-causal dependence (correlation). A backdoor path can be closed in two ways: conditioning and colliders. The path <span class="math inline">\(X_1 \rightarrow X_2 \rightarrow Y\)</span> is a chain and therefore (using the rules from earlier) conditioning on <span class="math inline">\(X_2\)</span> makes <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span> independent, effectively “closing” that backdoor path. If there is a collider along a backdoor path, then that path is closed and conditioning on the collider has the negative consequence of opening the backdoor path. When there exists a set of variables <span class="math inline">\(\mathbf{Z}\)</span> that close all backdoor paths between a pair of variables (e.g.&nbsp;<span class="math inline">\((X_1, Y)\)</span>), the backdoor criterion (<span class="citation" data-cites="pearl_causality_2009">Pearl (<a href="references.html#ref-pearl_causality_2009" role="doc-biblioref">2009</a>)</span>) is satisfied and the interventional effect of <span class="math inline">\(X_1\)</span> on <span class="math inline">\(Y\)</span> can be estimated. However, the set of variables <span class="math inline">\(\mathbf{Z}\)</span> may not exist, meaning that the desired interventional quantity is not identifiable from observational data alone.</p>
+<div class="cell" data-file="figures/confounder.dot" data-layout-align="default">
 <div class="cell-output-display">
-<div id="fig-confounder" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div id="fig-confounder" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-confounder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="672" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node2" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
-<title>
-X1-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path> <polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon> </g> <!-- X2 --> <g id="node3" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;X1 --> <g id="edge2" class="edge">
-<title>
-X2-&gt;X1
-</title>
-<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path> <polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge3" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path> <polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- Y -->
+<g id="node2" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path>
+<polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon>
+</g>
+<!-- X2 -->
+<g id="node3" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X2&#45;&gt;X1 -->
+<g id="edge2" class="edge">
+<title>X2-&gt;X1</title>
+<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path>
+<polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge3" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path>
+<polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">Figure&nbsp;3.2: Confounding in a Graphical Causal Model</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confounder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Confounding in a Graphical Causal Model
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Intervening on a variable is equivalent to forcing it to take on some value irrespective of the other factors that would typically influence it. Graphically, this is equivalent to removing all of the incoming edges to the variable. For example, an intervention on <span class="math inline">\(X_1\)</span> in <a href="#fig-confounding-pre-intervention">Figure&nbsp;<span>3.3 (a)</span></a> can be represented graphically by removing the edge <span class="math inline">\((X_1, X_2)\)</span>. Importantly, the graphs in <a href="#fig-confounding-pre-intervention">Figure&nbsp;<span>3.3 (a)</span></a> and <a href="#fig-confounding-post-intervention">Figure&nbsp;<span>3.3 (b)</span></a> imply different sets of dependencies, which demonstrates a more general point that an interventional conditional distribution is not always equivalent to the corresponding observational conditional distribution. Notationally, the do-operator (<span class="citation" data-cites="pearl_causality_2009">Pearl (<a href="references.html#ref-pearl_causality_2009" role="doc-biblioref">2009</a>)</span>) is used to differentiate between expectations over these two types of distributions: <span class="math inline">\(E[Y=y | do(X_1=x_1)] \neq E[Y=y | X_1=x_1]\)</span>. To estimate the interventional effect of <span class="math inline">\(X_1\)</span> on <span class="math inline">\(Y\)</span>, we condition on <span class="math inline">\(X_2\)</span>, which closes the only backdoor path <span class="math inline">\(X_1 \leftarrow X_2 \rightarrow Y\)</span>, and therefore satisfies the backdoor criterion.</p>
+<p>Intervening on a variable is equivalent to forcing it to take on some value irrespective of the other factors that would typically influence it. Graphically, this is equivalent to removing all of the incoming edges to the variable. For example, an intervention on <span class="math inline">\(X_1\)</span> in <a href="#fig-confounding-pre-intervention" class="quarto-xref">Figure&nbsp;<span>3.3 (a)</span></a> can be represented graphically by removing the edge <span class="math inline">\((X_1, X_2)\)</span>. Importantly, the graphs in <a href="#fig-confounding-pre-intervention" class="quarto-xref">Figure&nbsp;<span>3.3 (a)</span></a> and <a href="#fig-confounding-post-intervention" class="quarto-xref">Figure&nbsp;<span>3.3 (b)</span></a> imply different sets of dependencies, which demonstrates a more general point that an interventional conditional distribution is not always equivalent to the corresponding observational conditional distribution. Notationally, the do-operator (<span class="citation" data-cites="pearl_causality_2009">Pearl (<a href="references.html#ref-pearl_causality_2009" role="doc-biblioref">2009</a>)</span>) is used to differentiate between expectations over these two types of distributions: <span class="math inline">\(E[Y=y | do(X_1=x_1)] \neq
+E[Y=y | X_1=x_1]\)</span>. To estimate the interventional effect of <span class="math inline">\(X_1\)</span> on <span class="math inline">\(Y\)</span>, we condition on <span class="math inline">\(X_2\)</span>, which closes the only backdoor path <span class="math inline">\(X_1 \leftarrow X_2
+\rightarrow Y\)</span>, and therefore satisfies the backdoor criterion.</p>
 <p><span class="math display">\[\begin{align}
     P(Y = y | do(X_1=x_1) &amp;= \sum_z P(Y=y | X_1=x_1, X_2 = x_2)P(X_2=x_2) \\
     E[y| do(x_1)] &amp;= \sum_{x_2} E[y|x_1, x_2]p(x_2)
 \end{align}\]</span></p>
 <p>Provided that a set of variables satisfying the backdoor criterion can be identified, a GCM allows a practitioner to predict interventional effects from purely observational data thereby addressing “what if” questions on the second rung of the ladder of causality. However, a GCM alone is still insufficient to answer “why” questions, which require counterfactual reasoning.</p>
 <div id="fig-intervention" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder.dot" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<div id="fig-confounding-pre-intervention" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intervention-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell quarto-layout-cell-subref quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder.dot" data-ref-parent="fig-intervention" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-intervention">
+<div id="fig-confounding-pre-intervention" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-confounding-pre-intervention-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="NaN" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node2" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
-<title>
-X1-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path> <polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon> </g> <!-- X2 --> <g id="node3" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;X1 --> <g id="edge2" class="edge">
-<title>
-X2-&gt;X1
-</title>
-<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path> <polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge3" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path> <polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- Y -->
+<g id="node2" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path>
+<polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon>
+</g>
+<!-- X2 -->
+<g id="node3" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X2&#45;&gt;X1 -->
+<g id="edge2" class="edge">
+<title>X2-&gt;X1</title>
+<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path>
+<polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge3" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path>
+<polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">(a) Pre-Intervention</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-confounding-pre-intervention-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Pre-Intervention
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder_post_intervention.dot" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<div id="fig-confounding-post-intervention" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div class="cell quarto-layout-cell-subref quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder_post_intervention.dot" data-ref-parent="fig-intervention" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-intervention">
+<div id="fig-confounding-post-intervention" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-confounding-post-intervention-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 130,-112 130,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node2" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="63" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
-<title>
-X1-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M35.35,-72.76C39.71,-64.28 45.15,-53.71 50.04,-44.2"></path> <polygon fill="black" stroke="black" points="53.23,-45.64 54.7,-35.15 47.01,-42.44 53.23,-45.64"></polygon> </g> <!-- X2 --> <g id="node3" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="99" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path> <polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 130,-112 130,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- Y -->
+<g id="node2" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="63" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M35.35,-72.76C39.71,-64.28 45.15,-53.71 50.04,-44.2"></path>
+<polygon fill="black" stroke="black" points="53.23,-45.64 54.7,-35.15 47.01,-42.44 53.23,-45.64"></polygon>
+</g>
+<!-- X2 -->
+<g id="node3" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="99" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path>
+<polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">(b) Post-Intervention</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-confounding-post-intervention-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Post-Intervention
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.3: Interventions Modify the Graphical Causal Model</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intervention-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Interventions Modify the Graphical Causal Model
+</figcaption>
 </figure>
 </div>
-<p>In order to evaluate counterfactual scenarios associated with questions at the top of the ladder of causality, a structural causal model (SCM) is often required. Whereas a GCM only requires information about whether or not causal relationships between pairs of variables exist, a SCM requires the functional (e.g.&nbsp;mathematical) equations governing those relationships. Formally, a SCM It is comprised of four components: a set of exogenous “noise” variables <span class="math inline">\(U\)</span> whose values are assumed to be determined outside of the SCM, a joint distribution <span class="math inline">\(P_U\)</span> over these exogenous variables, a set of endogenous variables <span class="math inline">\(V\)</span> whose values are determined by the SCM, and a set of functions <span class="math inline">\(F = \{f_1, f_2, ...\}\)</span> where each <span class="math inline">\(f_i\)</span> assigns values to variables in <span class="math inline">\(V\)</span> based on the values of the other variables. Every SCM has an associated GCM whose nodes are the endogenous variables and the directed edges represent the causal relationships captured by the equations in <span class="math inline">\(F\)</span>. For simplicity, exogenous variables are typically omitted from the GCM. Every endogenous variable must be a descendent of at least one exogenous variable and exogenous variables cannot be descendants of any other variable. Therefore, each endogenous variable can be written as a function of its parents (denoted <span class="math inline">\(Pa(\cdot)\)</span>) and the associated noise variable:</p>
+<p>In order to evaluate counterfactual scenarios associated with questions at the top of the ladder of causality, a structural causal model (SCM) is often required. Whereas a GCM only requires information about whether or not causal relationships between pairs of variables exist, a SCM requires the functional (e.g.&nbsp;mathematical) equations governing those relationships. Formally, a SCM It is comprised of four components: a set of exogenous “noise” variables <span class="math inline">\(U\)</span> whose values are assumed to be determined outside of the SCM, a joint distribution <span class="math inline">\(P_U\)</span> over these exogenous variables, a set of endogenous variables <span class="math inline">\(V\)</span> whose values are determined by the SCM, and a set of functions <span class="math inline">\(F = \{f_1, f_2,
+...\}\)</span> where each <span class="math inline">\(f_i\)</span> assigns values to variables in <span class="math inline">\(V\)</span> based on the values of the other variables. Every SCM has an associated GCM whose nodes are the endogenous variables and the directed edges represent the causal relationships captured by the equations in <span class="math inline">\(F\)</span>. For simplicity, exogenous variables are typically omitted from the GCM. Every endogenous variable must be a descendent of at least one exogenous variable and exogenous variables cannot be descendants of any other variable. Therefore, each endogenous variable can be written as a function of its parents (denoted <span class="math inline">\(Pa(\cdot)\)</span>) and the associated noise variable:</p>
 <p><span class="math display">\[
 X_i = f_i(Pa(X_i), U_i)
 \]</span></p>
-<p>With this foundation, we can now see how model level questions at any level can be addressed using only the model (<a href="#fig-levels-of-explanation">Figure&nbsp;<span>3.4</span></a>). For simplicity, assume we have just two features <span class="math inline">\(X_1, X_2\)</span> with associated noise terms <span class="math inline">\(U_1, U_2\)</span>. There are three endogenous variables <span class="math inline">\(V = \{Y, X_1, X_2\}\)</span> representing the 2 features and the output of the model. Since we are interested in a model level explanation, every feature <span class="math inline">\(X_i\)</span> has an edge pointing to <span class="math inline">\(\hat{Y}\)</span> and no other edges between them. Therefore, <span class="math inline">\(f_1, f_2\)</span> are functions of the noise terms only and <span class="math inline">\(f_{Y}\)</span> is the model itself, which is deterministic and therefore has no additional noise term. The SCM is fully specified, so counterfactual questions can be addressed, which means that interventional and associative questions are also addressable.</p>
+<p>With this foundation, we can now see how model level questions at any level can be addressed using only the model (<a href="#fig-levels-of-explanation" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>). For simplicity, assume we have just two features <span class="math inline">\(X_1, X_2\)</span> with associated noise terms <span class="math inline">\(U_1,
+U_2\)</span>. There are three endogenous variables <span class="math inline">\(V = \{Y, X_1, X_2\}\)</span> representing the 2 features and the output of the model. Since we are interested in a model level explanation, every feature <span class="math inline">\(X_i\)</span> has an edge pointing to <span class="math inline">\(\hat{Y}\)</span> and no other edges between them. Therefore, <span class="math inline">\(f_1, f_2\)</span> are functions of the noise terms only and <span class="math inline">\(f_{Y}\)</span> is the model itself, which is deterministic and therefore has no additional noise term. The SCM is fully specified, so counterfactual questions can be addressed, which means that interventional and associative questions are also addressable.</p>
 <div id="fig-levels-of-explanation" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder_post_intervention.dot" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<div id="fig-model-level" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-levels-of-explanation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell quarto-layout-cell-subref quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder_post_intervention.dot" data-ref-parent="fig-levels-of-explanation" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-levels-of-explanation">
+<div id="fig-model-level" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-model-level-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="NaN" height="480" viewbox="0.00 0.00 134.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 130,-112 130,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node2" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="63" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
-<title>
-X1-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M35.35,-72.76C39.71,-64.28 45.15,-53.71 50.04,-44.2"></path> <polygon fill="black" stroke="black" points="53.23,-45.64 54.7,-35.15 47.01,-42.44 53.23,-45.64"></polygon> </g> <!-- X2 --> <g id="node3" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="99" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path> <polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 130,-112 130,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- Y -->
+<g id="node2" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="63" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M35.35,-72.76C39.71,-64.28 45.15,-53.71 50.04,-44.2"></path>
+<polygon fill="black" stroke="black" points="53.23,-45.64 54.7,-35.15 47.01,-42.44 53.23,-45.64"></polygon>
+</g>
+<!-- X2 -->
+<g id="node3" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="99" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M90.65,-72.76C86.29,-64.28 80.85,-53.71 75.96,-44.2"></path>
+<polygon fill="black" stroke="black" points="78.99,-42.44 71.3,-35.15 72.77,-45.64 78.99,-42.44"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">(a) Model Level</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-model-level-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Model Level
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder.dot" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<div id="fig-world-level" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div class="cell quarto-layout-cell-subref quarto-layout-cell" data-fig-width="45%" data-file="figures/confounder.dot" data-ref-parent="fig-levels-of-explanation" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-levels-of-explanation">
+<div id="fig-world-level" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-world-level-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="NaN" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node2" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
-<title>
-X1-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path> <polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon> </g> <!-- X2 --> <g id="node3" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;X1 --> <g id="edge2" class="edge">
-<title>
-X2-&gt;X1
-</title>
-<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path> <polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge3" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path> <polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- Y -->
+<g id="node2" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path>
+<polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon>
+</g>
+<!-- X2 -->
+<g id="node3" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X2&#45;&gt;X1 -->
+<g id="edge2" class="edge">
+<title>X2-&gt;X1</title>
+<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path>
+<polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge3" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path>
+<polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">(b) World Level</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-world-level-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) World Level
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.4: Levels of Explanation</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-levels-of-explanation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: Levels of Explanation
+</figcaption>
 </figure>
 </div>
-<p>Following a similar argument, we can also see how world-level explanations cannot always be addressed without additional information. Given the same setup as in the previous example, but with the edge <span class="math inline">\((X_2, X_1)\)</span> (see <a href="#fig-world-level">Figure&nbsp;<span>3.4 (b)</span></a>). We now have <span class="math inline">\(Pa(X_1) = \{X_2, U_1\}\)</span>, however, we have not specified a corresponding function <span class="math inline">\(f_1\)</span> that includes both of these terms. Therefore, the SCM is under-specified and counterfactual questions cannot be addressed. However, interventional questions can be addressed because there exists a set of variables satisfying the backdoor criterion for estimating the two interventional quantities of interest: <span class="math inline">\(P(Y = y | do(X_1 = x_1))\)</span> and <span class="math inline">\(P(Y = y | do(X_2 = x_2)\)</span>. For the first case, we condition on <span class="math inline">\(X_2\)</span> to close the backdoor path <span class="math inline">\((X_1, X_2, Y)\)</span>. In the second case, no conditioning is required since the post-intervention graph is the same as the pre-intervention graph.</p>
+<p>Following a similar argument, we can also see how world-level explanations cannot always be addressed without additional information. Given the same setup as in the previous example, but with the edge <span class="math inline">\((X_2, X_1)\)</span> (see <a href="#fig-world-level" class="quarto-xref">Figure&nbsp;<span>3.4 (b)</span></a>). We now have <span class="math inline">\(Pa(X_1) = \{X_2, U_1\}\)</span>, however, we have not specified a corresponding function <span class="math inline">\(f_1\)</span> that includes both of these terms. Therefore, the SCM is under-specified and counterfactual questions cannot be addressed. However, interventional questions can be addressed because there exists a set of variables satisfying the backdoor criterion for estimating the two interventional quantities of interest: <span class="math inline">\(P(Y = y | do(X_1 = x_1))\)</span> and <span class="math inline">\(P(Y
+= y | do(X_2 = x_2)\)</span>. For the first case, we condition on <span class="math inline">\(X_2\)</span> to close the backdoor path <span class="math inline">\((X_1, X_2, Y)\)</span>. In the second case, no conditioning is required since the post-intervention graph is the same as the pre-intervention graph.</p>
 <p>In this section, we reviewed the core components of Pearl-style causality, namely, the degree and type of causal information required to address questions on different rungs of the ladder of causality. We have also provided an initial preview of how these formalisms (GCMs and SCMs) are connected to the task of generating model explanations. For explanatory questions targeting world-level model explanations, the usual hierarchy of required causal information applies. However, for model-level explanations, the model itself is sufficient for generating explanations that can address questions at all rungs. Therefore, from a causal perspective, understanding the desired level of explanation is essential to understand whether any auxiliary causal information is required. We will return to these ideas in later sections, but first, some additional background on Shapley values is required.</p>
 </section>
 <section id="shapley-value" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="shapley-value"><span class="header-section-number">3.2</span> Shapley Value</h2>
-<p>Game theory explores the strategic behavior and interactions between rational agents in the context of well-defined games. Cooperative game theory is a sub-field that focuses on games in which groups of players (coalitions) compete against other groups of players and receive a combined payout (gain), or alternatively, incur a total cost<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. A cooperative game is defined by a set of players called the grand coalition <span class="math inline">\(\mathcal{C} = \{1, 2, ..., N\}\)</span> and a value function<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="math inline">\(v\)</span>, which specifies the real-valued payout every group of players <span class="math inline">\(S \subseteq \mathcal{C}\)</span> receives when they cooperate. More formally, <span class="math inline">\(v\)</span> is a set function <span class="math inline">\(v: \mathcal{P}(C) \rightarrow \mathbb{R}\)</span> such that <span class="math inline">\(v(S) \in \mathcal{R}\)</span> and where <span class="math inline">\(\mathcal{P}(\mathcal{C})\)</span> denotes the power set of the grand coalition. Since the payout is received by the group, there is a further complication regarding how to fairly allocate the group’s winnings to individual players, referred to as the attribution problem.</p>
+<p>Game theory explores the strategic behavior and interactions between rational agents in the context of well-defined games. Cooperative game theory is a sub-field that focuses on games in which groups of players (coalitions) compete against other groups of players and receive a combined payout (gain), or alternatively, incur a total cost<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. A cooperative game is defined by a set of players called the grand coalition <span class="math inline">\(\mathcal{C} = \{1, 2,
+..., N\}\)</span> and a value function<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="math inline">\(v\)</span>, which specifies the real-valued payout every group of players <span class="math inline">\(S \subseteq \mathcal{C}\)</span> receives when they cooperate. More formally, <span class="math inline">\(v\)</span> is a set function <span class="math inline">\(v: \mathcal{P}(C) \rightarrow \mathbb{R}\)</span> such that <span class="math inline">\(v(S) \in \mathcal{R}\)</span> and where <span class="math inline">\(\mathcal{P}(\mathcal{C})\)</span> denotes the power set of the grand coalition. Since the payout is received by the group, there is a further complication regarding how to fairly allocate the group’s winnings to individual players, referred to as the attribution problem.</p>
 <p>The Shapley value (<span class="citation" data-cites="shapley_value_1953">Shapley (<a href="references.html#ref-shapley_value_1953" role="doc-biblioref">1953</a>)</span>) is a solution concept from cooperative game theory that produces an allocation strategy for fairly distributing payoffs to each player in a coalition. It can be viewed as the marginal contribution of each player to the coalition, averaged over all possible orderings of the players. To build intuition for how this solves the attribution problem, consider the following example.</p>
-<p>A factory employs three workers <span class="math inline">\((w_1, w_2, w_3)\)</span>, each of whom has agreed to be paid in proportional to their contribution to the factory’s widget output. Employees are required to work a fixed number of hours each week, but they are allowed to set their own schedules. The factory owner has decided to use Shapley values to set each employee’s wage and has collected data on factory output when different workers are present. In this scenario, the workers are the players in the game and the value function is captured by the hourly factory production for every combination of workers (see <a href="#tbl-productivity">Table&nbsp;<span>3.1</span></a>).</p>
-<div id="tbl-productivity" class="anchored">
-<table class="table">
-<caption>Table&nbsp;3.1: Worker Productivity</caption>
+<p>A factory employs three workers <span class="math inline">\((w_1, w_2, w_3)\)</span>, each of whom has agreed to be paid in proportional to their contribution to the factory’s widget output. Employees are required to work a fixed number of hours each week, but they are allowed to set their own schedules. The factory owner has decided to use Shapley values to set each employee’s wage and has collected data on factory output when different workers are present. In this scenario, the workers are the players in the game and the value function is captured by the hourly factory production for every combination of workers (see <a href="#tbl-productivity" class="quarto-xref">Table&nbsp;<span>3.1</span></a>).</p>
+<div id="tbl-productivity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Worker Productivity
+</figcaption>
+<div aria-describedby="tbl-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: center;">workers</th>
@@ -649,7 +819,9 @@ X2-&gt;Y
 </tbody>
 </table>
 </div>
-<p>The Shapley value for each worker is the number of additional widgets per hour (marginal contribution) produced when they arrive at the factory, averaged over all possible arrival orders. The marginal contribution of each worker <span class="math inline">\(i\)</span> to a coalition <span class="math inline">\(S\)</span> (columns 2-4 of <a href="#tbl-productivity">Table&nbsp;<span>3.1</span></a>) is the additional value generated when worker <span class="math inline">\(i\)</span> arrives<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+</figure>
+</div>
+<p>The Shapley value for each worker is the number of additional widgets per hour (marginal contribution) produced when they arrive at the factory, averaged over all possible arrival orders. The marginal contribution of each worker <span class="math inline">\(i\)</span> to a coalition <span class="math inline">\(S\)</span> (columns 2-4 of <a href="#tbl-productivity" class="quarto-xref">Table&nbsp;<span>3.1</span></a>) is the additional value generated when worker <span class="math inline">\(i\)</span> arrives<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
 <p><span id="eq-marginal-value"><span class="math display">\[
 \Delta(i, S) = v(S \cup i) - v(S)
 \tag{3.1}\]</span></span></p>
@@ -661,10 +833,14 @@ S_{i, \pi} = \{j: \pi(j) &lt; \pi(i)\}
 <p><span id="eq-permutation-shapley-formula"><span class="math display">\[
 \phi(i) = \frac{1}{N!} \sum_{\pi \in \Pi} \Delta(i, S_{i, \pi})
 \tag{3.2}\]</span></span></p>
-<p>The last row of <a href="#tbl-sv-by-worker">Table&nbsp;<span>3.2</span></a> computes the Shapley value for each worker (denoted as <span class="math inline">\(\phi_i\)</span>) using this formulation, which relies on the information in <a href="#tbl-productivity">Table&nbsp;<span>3.1</span></a>.</p>
-<div id="tbl-sv-by-worker" class="anchored">
-<table class="table">
-<caption>Table&nbsp;3.2: Shapley Value by Worker</caption>
+<p>The last row of <a href="#tbl-sv-by-worker" class="quarto-xref">Table&nbsp;<span>3.2</span></a> computes the Shapley value for each worker (denoted as <span class="math inline">\(\phi_i\)</span>) using this formulation, which relies on the information in <a href="#tbl-productivity" class="quarto-xref">Table&nbsp;<span>3.1</span></a>.</p>
+<div id="tbl-sv-by-worker" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sv-by-worker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: Shapley Value by Worker
+</figcaption>
+<div aria-describedby="tbl-sv-by-worker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 13%">
 <col style="width: 28%">
@@ -725,21 +901,26 @@ S_{i, \pi} = \{j: \pi(j) &lt; \pi(i)\}
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>The Shapley value can be expressed in an equivalent way based on the number of unique subsets of the grand coalition <span class="math inline">\(S \subseteq C\)</span> and the number of permutations of <span class="math inline">\(C\)</span> for which some ordering of players in <span class="math inline">\(S\)</span> immediately precedes the <span class="math inline">\(i\)</span>th player. The initial proof of the equivalence of these two formulations can be found in <span class="citation" data-cites="shapley_value_1953">Shapley (<a href="references.html#ref-shapley_value_1953" role="doc-biblioref">1953</a>)</span> and is reproduced in an expanded fashion in <span class="citation" data-cites="strumbelj_explaining_2009">Štrumbelj, Kononenko, and Robnik Šikonja (<a href="references.html#ref-strumbelj_explaining_2009" role="doc-biblioref">2009</a>)</span>.</p>
 <p><span id="eq-alternative-shapley-formula"><span class="math display">\[
 \phi(i) = \frac{1}{N!} \sum_{S \subseteq C \backslash \{i\}} |S|!(N-|S| - 1)! \Delta(i, S)
 \tag{3.3}\]</span></span></p>
 <p>One of the primary motivations for the use of the Shapley value is that it can be derived axiomatically. Given the following three axioms, the Shapley value not only solves the attribution problem, but can be shown to be the unique solution.</p>
 <ol type="1">
-<li><strong>Efficiency</strong>: The Shapley values for individual players sum up to the payout received by the grand coalition: <span class="math inline">\(\sum_{i \in C} \phi(i) = v(C) - v(\emptyset)\)</span>.</li>
+<li><strong>Efficiency</strong>: The Shapley values for individual players sum up to the payout received by the grand coalition: <span class="math inline">\(\sum_{i \in C} \phi(i) = v(C) -
+v(\emptyset)\)</span>.</li>
 <li><strong>Symmetry</strong>: If two players make equal contributions to all possible coalitions, then they should receive equal payouts. For players <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, if <span class="math inline">\(\Delta(i, S) = \Delta(j, S)\)</span> for all subsets <span class="math inline">\(S \subset C\)</span>, then <span class="math inline">\(\phi(i) = \phi(j)\)</span>.</li>
-<li><strong>Dummy/Nullity/Sensitivity</strong>: If a player’s marginal contribution to all coalitions is zero (e.g.&nbsp;they never increase the payout of any coalition), then they should receive zero payout. For any player <span class="math inline">\(i\)</span>, if <span class="math inline">\(\Delta(i, S) = 0\)</span> for all <span class="math inline">\(S \subset N\)</span>, then <span class="math inline">\(\phi(i) = 0\)</span>.</li>
-<li><strong>Linearity/Additivity</strong>: Given two games defined by value functions <span class="math inline">\(v\)</span> and <span class="math inline">\(v'\)</span>, the Shapley value for each player in the combined game is the sum of the allocations in each individual game: <span class="math inline">\(\phi_{v' + v}(i) = \phi_v(i) + \phi_{v'}(i)\)</span>.</li>
+<li><strong>Dummy/Nullity/Sensitivity</strong>: If a player’s marginal contribution to all coalitions is zero (e.g.&nbsp;they never increase the payout of any coalition), then they should receive zero payout. For any player <span class="math inline">\(i\)</span>, if <span class="math inline">\(\Delta(i, S) =
+0\)</span> for all <span class="math inline">\(S \subset N\)</span>, then <span class="math inline">\(\phi(i) = 0\)</span>.</li>
+<li><strong>Linearity/Additivity</strong>: Given two games defined by value functions <span class="math inline">\(v\)</span> and <span class="math inline">\(v'\)</span>, the Shapley value for each player in the combined game is the sum of the allocations in each individual game: <span class="math inline">\(\phi_{v' + v}(i) = \phi_v(i) +
+\phi_{v'}(i)\)</span>.</li>
 </ol>
 <p>While this axiomatic grounding is both powerful and compelling, it is not factored into our human-centric evaluation framework and therefore plays a rather limited role in our discussion of Shapley-based model explanations. With the necessary background on Shapley values and Pearl-style causality in place, we are now in a position to examine the Shapley explanation literature using this proposed framework.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-halpern_causes_2005-1" class="csl-entry" role="listitem">
 Halpern, Joseph Y., and Judea Pearl. 2005a. <span>“Causes and <span>Explanations</span>: <span>A</span> <span>Structural</span>-<span>Model</span> <span>Approach</span>. <span>Part</span> <span>I</span>: <span>Causes</span>.”</span> <em>The British Journal for the Philosophy of Science</em> 56 (4): 843–87. <a href="http://www.jstor.org/stable/3541870">http://www.jstor.org/stable/3541870</a>.
 </div>
@@ -809,18 +990,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -852,11 +1022,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -866,8 +1075,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -879,7 +1097,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -923,6 +1264,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -948,6 +1290,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1009,17 +1377,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./framework.html" class="pagination-link">
+      <a href="./framework.html" class="pagination-link" aria-label="Evaluation Framework">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation Framework</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./explanations.html" class="pagination-link">
+      <a href="./explanations.html" class="pagination-link" aria-label="Shapley Explanations">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Shapley Explanations</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

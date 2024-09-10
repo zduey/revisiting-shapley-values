@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Revisiting Shapley Values: A Causal Perspective - 4&nbsp; Shapley Explanations</title>
+<title>4&nbsp; Shapley Explanations – Revisiting Shapley Values: A Causal Perspective</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -66,7 +67,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -75,6 +82,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -93,8 +101,35 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
 <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -104,13 +139,13 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explanations.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Shapley Explanations</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explanations.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Shapley Explanations</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -119,7 +154,7 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Revisiting Shapley Values: A Causal Perspective</a> 
@@ -189,7 +224,7 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -232,7 +267,9 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
   </div>
   
 
+
 </header>
+
 
 <p>Shapley explanations are a broad class of techniques characterized by their use of the Shapley value from cooperative game theory as the building block for generating quantitative explanations. Methods differ in how the underlying game is defined, how the Shapley values are estimated, and as a result, how those values should be interpreted when used as a model explanation. In this section, we reexamine the Shapley-based model explanation literature from a causal perspective using our evaluation framework, with a particular focus on the specific types of target explanatory questions that can be addressed by each method and the additional considerations, information, and assumptions required to do so.</p>
 <section id="overview" class="level2" data-number="4.1">
@@ -257,11 +294,12 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="value-function"><span class="header-section-number">4.1.1</span> Value Function</h3>
 <p>The most consequential aspect of the game formulation is the value function. As noted previously, the value function specifies the payout for every subset of players. Since most machine learning models cannot make predictions when inputs are missing (as is the case for any coalition besides the grand coalition), the value function must provide a replacement value for every feature that is not part of the coalition. In essence, it must simulate what happens when features are removed from the model (<span class="citation" data-cites="janzing_feature_2019">Janzing, Minorics, and Blöbaum (<a href="references.html#ref-janzing_feature_2019" role="doc-biblioref">2019</a>)</span>, <span class="citation" data-cites="merrick_explanation_2020">Merrick and Taly (<a href="references.html#ref-merrick_explanation_2020" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="covert_explaining_2020">Covert (<a href="references.html#ref-covert_explaining_2020" role="doc-biblioref">2020</a>)</span>). The brute-force approach is to avoid simulating altogether and apply the same learning algorithm (and hyperparameters) to every subset of features, effectively training <span class="math inline">\(2^N\)</span> separate models where <span class="math inline">\(N\)</span> is the number of features. Other alternatives include replacing the missing value with a fixed value (e.g. zero), a value from a reference data point, or the expected value over a collection of data points (reference distribution). Each of these alternatives to the brute force approach can be thought of as a special case of the last option (<span class="citation" data-cites="merrick_explanation_2020">Merrick and Taly (<a href="references.html#ref-merrick_explanation_2020" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="sundararajan_many_2020">Sundararajan and Najmi (<a href="references.html#ref-sundararajan_many_2020" role="doc-biblioref">2020</a>)</span>). However, there are numerous ways to select a reference distribution, which has generated significant debate over which choice is the correct one.</p>
 <p>Within our evaluation framework, the correct reference distribution is the one aligned with the target explanatory question, which is defined by the intended level of explanation and whether it is associative, interventional, or counterfactual. Shapley-based methods can be used to provide either model or world level explanations. However, much of the Shapley explanation literature implicitly assumes one of the two and fails to recognize the existence or validity of the other. There are two notable exceptions: <span class="citation" data-cites="basu_shapley_2020">Basu (<a href="references.html#ref-basu_shapley_2020" role="doc-biblioref">2020</a>)</span> makes a similar distinction using what they call “modes of interpretation” and <span class="citation" data-cites="wang_shapley_2021">Wang, Wiens, and Lundberg (<a href="references.html#ref-wang_shapley_2021" role="doc-biblioref">2021</a>)</span> introduce the notion of “boundaries of explanation,” which captures a similar idea. Failure to clearly distinguish between these different levels of explanation has fueled the debate over which reference distribution is correct. Before discussing particular methods, we revisit the different classes of reference distributions used by various Shapley methods and the types of explanatory questions that each can address.</p>
-<p>Reference distributions can be categorized as unconditional or conditional based on whether they consider features jointly or independently. In cases where features are independent – a situation that is rarely, if ever, true in practice – this distinction is irrelevant and the resulting Shapley values for both types are equivalent. Conditional value functions can be further categorized based on whether they are observational or interventional. Each of these three classes of reference distribution (unconditional, observational conditional, and interventional conditional) yield Shapley explanations at a particular level (model or world) that can be used to address particular types of target explanatory questions when interpreted correctly (see <a href="#fig-reference-distribution-selection">Figure&nbsp;<span>4.1</span></a>).</p>
-<div class="cell">
+<p>Reference distributions can be categorized as unconditional or conditional based on whether they consider features jointly or independently. In cases where features are independent – a situation that is rarely, if ever, true in practice – this distinction is irrelevant and the resulting Shapley values for both types are equivalent. Conditional value functions can be further categorized based on whether they are observational or interventional. Each of these three classes of reference distribution (unconditional, observational conditional, and interventional conditional) yield Shapley explanations at a particular level (model or world) that can be used to address particular types of target explanatory questions when interpreted correctly (see <a href="#fig-reference-distribution-selection" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>).</p>
+<div class="cell" data-layout-align="default">
 <div class="cell-output-display">
-<div id="fig-reference-distribution-selection" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div id="fig-reference-distribution-selection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reference-distribution-selection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <pre class="mermaid mermaid-js" data-label="fig-reference-distribution-selection">flowchart
   A{Level}
@@ -272,7 +310,10 @@ gtag('config', 'G-317KRPWML8', { 'anonymize_ip': true});
   C --&gt;|counterfactual| F[interventional]
 </pre>
 </div>
-<figcaption class="figure-caption">Figure&nbsp;4.1: Selecting A Reference Distribution</figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reference-distribution-selection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Selecting A Reference Distribution
+</figcaption>
 </figure>
 </div>
 </div>
@@ -292,11 +333,16 @@ v(S) = E[f(\mathbf{X}) | do(\mathbf{X}_S = \mathbf{x}_s)]
 v(S) = E[f(\mathbf{x}_S, \mathbf{X}_{\bar{S}})]
 \tag{4.3}\]</span></span></p>
 <p>In our view, this type of reference distribution is appropriate for generating model-level explanations as it effectively ignores real-world causal relationships by assuming feature independence. As noted previously, the model itself is sufficient for addressing associative, interventional, and counterfactual questions so no auxiliary causal information is required.</p>
-<p><span class="citation" data-cites="janzing_feature_2019">Janzing, Minorics, and Blöbaum (<a href="references.html#ref-janzing_feature_2019" role="doc-biblioref">2019</a>)</span> make the case that a causal perspective supports using a marginal reference distribution in all cases. To make their point, they introduce a distinction between real-world (“true”) features <span class="math inline">\(\tilde{X_1}, \tilde{X_2}, ..., \tilde{X_n}\)</span> and features that serve as input to the model <span class="math inline">\(X_1, X_2, ..., X_n\)</span> (see <a href="#fig-janzing-model-vs-world">Figure&nbsp;<span>4.2</span></a>). Model features have no causal relationships (e.g.&nbsp;are independent) even if causal relationships exist between their real-world counterparts. Using this setup, they show that the backdoor criterion is satisfied and the interventional conditional value function (<a href="#eq-interventional-value-function">Equation&nbsp;<span>4.2</span></a>}) yields identical Shapley values as an unconditional one (<a href="#eq-marginal-value-function">Equation&nbsp;<span>4.3</span></a>}).</p>
-<div id="fig-janzing-model-vs-world" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="./images/janzing_model_vs_wolrd.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.2: Model vs.&nbsp;World Causality</figcaption>
+<p><span class="citation" data-cites="janzing_feature_2019">Janzing, Minorics, and Blöbaum (<a href="references.html#ref-janzing_feature_2019" role="doc-biblioref">2019</a>)</span> make the case that a causal perspective supports using a marginal reference distribution in all cases. To make their point, they introduce a distinction between real-world (“true”) features <span class="math inline">\(\tilde{X_1},
+\tilde{X_2}, ..., \tilde{X_n}\)</span> and features that serve as input to the model <span class="math inline">\(X_1, X_2, ..., X_n\)</span> (see <a href="#fig-janzing-model-vs-world" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>). Model features have no causal relationships (e.g.&nbsp;are independent) even if causal relationships exist between their real-world counterparts. Using this setup, they show that the backdoor criterion is satisfied and the interventional conditional value function (<a href="#eq-interventional-value-function" class="quarto-xref">Equation&nbsp;<span>4.2</span></a>}) yields identical Shapley values as an unconditional one (<a href="#eq-marginal-value-function" class="quarto-xref">Equation&nbsp;<span>4.3</span></a>}).</p>
+<div id="fig-janzing-model-vs-world" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-janzing-model-vs-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/janzing_model_vs_wolrd.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-janzing-model-vs-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Model vs.&nbsp;World Causality
+</figcaption>
 </figure>
 </div>
 <p>In our view, the causal perspective assumed by <span class="citation" data-cites="janzing_feature_2019">Janzing, Minorics, and Blöbaum (<a href="references.html#ref-janzing_feature_2019" role="doc-biblioref">2019</a>)</span> is limited because it implicitly assumes that all target explanatory questions can be addressed through model-level explanations. To illustrate the point, consider a model that takes loan amount, income, and savings account balance as inputs and predicts risk of default. The question “What if I resubmit by loan application and say my income is <span class="math inline">\(X\)</span>?’’ likely has a model-level intention, while a question like “What if I increase my income to <span class="math inline">\(X\)</span>” is targeting a world-level explanation. If higher income is causally related to savings account balance (e.g.&nbsp;always depositing a fixed percentage of income), the answer to the second question is not necessarily the same as the first. In our evaluation framework, part of what makes an explanation correct is that it aligns with the target explanatory question. Therefore, understanding the explainee’s desired level of explanation is critical</p>
@@ -325,10 +371,14 @@ v(S) = E[f(\mathbf{x}_S, \mathbf{X}_{\bar{S}})]
 </section>
 <section id="local-explanations" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="local-explanations"><span class="header-section-number">4.3</span> Local Explanations</h2>
-<p>In this section, we review Shapley-based methods for generating local explanations through the lens of our evaluation framework. Much like the Shapley-based global explanation literature, the methods and associated debates in this literature are largely driven by two concerns: how to generate explanations when features are dependent, and whether features that the model does not explicitly depend upon should be part of an explanation. Our goal is to provide enough information about each of the methods – the type of explanatory questions they address, their underlying assumptions, and their limitations – to allow practitioners to produce correct Shapley-based explanations. For a summary of the methods, see <a href="#tbl-local-explanation-methods">Table&nbsp;<span>4.1</span></a>.</p>
-<div id="tbl-local-explanation-methods" class="anchored">
-<table class="table">
-<caption>Table&nbsp;4.1: Local Shapley Explanation Methods</caption>
+<p>In this section, we review Shapley-based methods for generating local explanations through the lens of our evaluation framework. Much like the Shapley-based global explanation literature, the methods and associated debates in this literature are largely driven by two concerns: how to generate explanations when features are dependent, and whether features that the model does not explicitly depend upon should be part of an explanation. Our goal is to provide enough information about each of the methods – the type of explanatory questions they address, their underlying assumptions, and their limitations – to allow practitioners to produce correct Shapley-based explanations. For a summary of the methods, see <a href="#tbl-local-explanation-methods" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.</p>
+<div id="tbl-local-explanation-methods" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-local-explanation-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Local Shapley Explanation Methods
+</figcaption>
+<div aria-describedby="tbl-local-explanation-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 37%">
 <col style="width: 21%">
@@ -426,12 +476,14 @@ v(S) = E[f(\mathbf{x}_S, \mathbf{X}_{\bar{S}})]
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <section id="observational-and-implicitly-causal-methods" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="observational-and-implicitly-causal-methods"><span class="header-section-number">4.3.1</span> Observational and Implicitly-Causal Methods</h3>
 <p>The earliest and most commonly-used methods leverage a purely observational approach to generating explanations. Many of these methods define a value function in one way, but estimate Shapley values that correspond to a different value function <span class="citation" data-cites="kumar_problems_2020">Kumar et al. (<a href="references.html#ref-kumar_problems_2020" role="doc-biblioref">2020</a>)</span>. For the purposes of evaluating the correctness of the resulting explanations, what matters is that the estimated Shapley values are aligned with the target explanatory questions. Most of these methods rely on some form of sampling to approximate the Shapley values. Following <span class="citation" data-cites="merrick_explanation_2020">Merrick and Taly (<a href="references.html#ref-merrick_explanation_2020" role="doc-biblioref">2020</a>)</span>, we advocate for quantifying the uncertainty in these estimates as part of generating the explanations. <span class="citation" data-cites="merrick_explanation_2020">Merrick and Taly (<a href="references.html#ref-merrick_explanation_2020" role="doc-biblioref">2020</a>)</span> propose computing confidence intervals for the estimates; however, we note that other methods from the uncertainty quantification literature are worth exploring. Unfortunately, a review of those methods is outside the scope of this work.</p>
 <section id="shapley-regression-values" class="level4" data-number="4.3.1.1">
 <h4 data-number="4.3.1.1" class="anchored" data-anchor-id="shapley-regression-values"><span class="header-section-number">4.3.1.1</span> Shapley Regression Values</h4>
-<p><span class="citation" data-cites="strumbelj_explaining_2009">E. Štrumbelj, Kononenko, and Robnik Šikonja (<a href="references.html#ref-strumbelj_explaining_2009" role="doc-biblioref">2009</a>)</span> proposed Interactions Methods for Explanations (IME), the earliest method for generating Shapley-based local explanations. The authors define the target Shapley values using a conditional observational value function (<a href="#eq-observational-value-function">Equation&nbsp;<span>4.1</span></a>) and estimate them by fitting separate models for each subset of features. <span class="citation" data-cites="covert_explaining_2020">Covert (<a href="references.html#ref-covert_explaining_2020" role="doc-biblioref">2020</a>)</span> showed that this brute-force estimation procedure yields values that are aligned with the defined value function. Based on the estimation procedure, subsequent work refers to these as <strong>Shapley Regression Values</strong> (SRV). The resulting explanations are only able to address target explanatory questions on the first rung of the ladder of causality (associative/”how” questions).</p>
+<p><span class="citation" data-cites="strumbelj_explaining_2009">E. Štrumbelj, Kononenko, and Robnik Šikonja (<a href="references.html#ref-strumbelj_explaining_2009" role="doc-biblioref">2009</a>)</span> proposed Interactions Methods for Explanations (IME), the earliest method for generating Shapley-based local explanations. The authors define the target Shapley values using a conditional observational value function (<a href="#eq-observational-value-function" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>) and estimate them by fitting separate models for each subset of features. <span class="citation" data-cites="covert_explaining_2020">Covert (<a href="references.html#ref-covert_explaining_2020" role="doc-biblioref">2020</a>)</span> showed that this brute-force estimation procedure yields values that are aligned with the defined value function. Based on the estimation procedure, subsequent work refers to these as <strong>Shapley Regression Values</strong> (SRV). The resulting explanations are only able to address target explanatory questions on the first rung of the ladder of causality (associative/”how” questions).</p>
 </section>
 <section id="shapley-sampling-values" class="level4" data-number="4.3.1.2">
 <h4 data-number="4.3.1.2" class="anchored" data-anchor-id="shapley-sampling-values"><span class="header-section-number">4.3.1.2</span> Shapley Sampling Values</h4>
@@ -493,64 +545,80 @@ v(S) = \hat{v}(S) = E_{\Pi_{i \in C} p(\mathbf{X}_i)}[f(\mathbf{x}_S, \mathbf{X}
 </section>
 <section id="asymmetric-shapley-values" class="level4" data-number="4.3.2.2">
 <h4 data-number="4.3.2.2" class="anchored" data-anchor-id="asymmetric-shapley-values"><span class="header-section-number">4.3.2.2</span> Asymmetric Shapley Values</h4>
-<p><span class="citation" data-cites="frye_asymmetric_2020">Frye, Rowat, and Feige (<a href="references.html#ref-frye_asymmetric_2020" role="doc-biblioref">2020</a>)</span> introduced the first method, <strong>Asymmetric Shapley Values</strong>(ASV) that leverages auxiliary causal information to generate Shapley-based explanations. They define the value function using an observational conditional expectation (<a href="#eq-observational-value-function">Equation&nbsp;<span>4.1</span></a>}). Recognizing the difficulty of providing (and defending) a full graphical causal model, ASV requires only a partial causal ordering of the features. For example, given a set of features <span class="math inline">\(X_1, X_2, ..., X_n\)</span>, a practitioner may provide the ordering <span class="math inline">\(\{X_1, X_2\}\)</span> indicating that <span class="math inline">\(X_1\)</span> is a causal ancestor of <span class="math inline">\(X_2\)</span>. In <strong>Distal Asymmetric Shapley Values</strong> (d-ASV), this causal information is included by assigning zero weight to any permutations (<a href="background.html#eq-permutation-shapley-formula">Equation&nbsp;<span>3.2</span></a>})for which <span class="math inline">\(X_2\)</span> precedes <span class="math inline">\(X_1\)</span>. They argue that this aligns with explanations that attribute effects to root causes. Alternatively, <strong>Proximate Asymmetric Shapley Values</strong> (p-ASV) assigns zero weight to any permutations for which <span class="math inline">\(X_1\)</span> precedes <span class="math inline">\(X_2\)</span> such that attributions favor immediate causes. The non-uniform weighting of the permutations results in values that violate the symmetry axiom, which corresponds to a quasivalue from cooperative game theory.</p>
-<div class="cell" data-file="figures/asv_alt.dot">
+<p><span class="citation" data-cites="frye_asymmetric_2020">Frye, Rowat, and Feige (<a href="references.html#ref-frye_asymmetric_2020" role="doc-biblioref">2020</a>)</span> introduced the first method, <strong>Asymmetric Shapley Values</strong>(ASV) that leverages auxiliary causal information to generate Shapley-based explanations. They define the value function using an observational conditional expectation (<a href="#eq-observational-value-function" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>}). Recognizing the difficulty of providing (and defending) a full graphical causal model, ASV requires only a partial causal ordering of the features. For example, given a set of features <span class="math inline">\(X_1, X_2, ..., X_n\)</span>, a practitioner may provide the ordering <span class="math inline">\(\{X_1, X_2\}\)</span> indicating that <span class="math inline">\(X_1\)</span> is a causal ancestor of <span class="math inline">\(X_2\)</span>. In <strong>Distal Asymmetric Shapley Values</strong> (d-ASV), this causal information is included by assigning zero weight to any permutations (<a href="background.html#eq-permutation-shapley-formula" class="quarto-xref">Equation&nbsp;<span>3.2</span></a>})for which <span class="math inline">\(X_2\)</span> precedes <span class="math inline">\(X_1\)</span>. They argue that this aligns with explanations that attribute effects to root causes. Alternatively, <strong>Proximate Asymmetric Shapley Values</strong> (p-ASV) assigns zero weight to any permutations for which <span class="math inline">\(X_1\)</span> precedes <span class="math inline">\(X_2\)</span> such that attributions favor immediate causes. The non-uniform weighting of the permutations results in values that violate the symmetry axiom, which corresponds to a quasivalue from cooperative game theory.</p>
+<div class="cell" data-file="figures/asv_alt.dot" data-layout-align="default">
 <div class="cell-output-display">
-<div id="fig-asv-alt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div id="fig-asv-alt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-asv-alt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <svg width="672" height="480" viewbox="0.00 0.00 89.00 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
-<title>
-G
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X1</text> </g> <!-- X2 --> <g id="node2" class="node">
-<title>
-X2
-</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge1" class="edge">
-<title>
-X1-&gt;X2
-</title>
-<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path> <polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon> </g> <!-- Y --> <g id="node3" class="node">
-<title>
-Y
-</title>
-<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge2" class="edge">
-<title>
-X1-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path> <polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge3" class="edge">
-<title>
-X2-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path> <polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon> </g> </g>
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 85,-184 85,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-157.8" font-family="Times,serif" font-size="14.00">X1</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">X2</text>
+</g>
+<!-- X1&#45;&gt;X2 -->
+<g id="edge1" class="edge">
+<title>X1-&gt;X2</title>
+<path fill="none" stroke="black" d="M47.6,-144.41C44.49,-136.34 40.67,-126.43 37.17,-117.35"></path>
+<polygon fill="black" stroke="black" points="40.4,-116.03 33.54,-107.96 33.87,-118.55 40.4,-116.03"></polygon>
+</g>
+<!-- Y -->
+<g id="node3" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="54" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M57.65,-143.91C59.68,-133.57 61.98,-120.09 63,-108 64.34,-92.06 64.34,-87.94 63,-72 62.28,-63.5 60.93,-54.31 59.49,-46.01"></path>
+<polygon fill="black" stroke="black" points="62.91,-45.29 57.65,-36.09 56.03,-46.56 62.91,-45.29"></polygon>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge3" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M33.4,-72.41C36.51,-64.34 40.33,-54.43 43.83,-45.35"></path>
+<polygon fill="black" stroke="black" points="47.13,-46.55 47.46,-35.96 40.6,-44.03 47.13,-46.55"></polygon>
+</g>
+</g>
 </svg>
 </div>
-<figcaption class="figure-caption">Figure&nbsp;4.3: Alterative Graphical Causal Model with <span class="math inline">\(\{X_1, X_2\}\)</span></figcaption>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-asv-alt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Alterative Graphical Causal Model with <span class="math inline">\(\{X_1, X_2\}\)</span>
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>One problem with ASV is that a single causal ordering is consistent with multiple graphical causal models. For example, the ordering <span class="math inline">\(\{X_1, X_2\}\)</span> is consistent with both (<a href="background.html#fig-chain">Figure&nbsp;<span>3.1 (a)</span></a>) and (<a href="#fig-asv-alt">Figure&nbsp;<span>4.3</span></a>). If the goal is to generate attributions that recover the causal relationship between <span class="math inline">\(X_1\)</span> on <span class="math inline">\(Y\)</span>, these differences in the underlying graphical causal models are relevant (require different conditioning variables to satisfy the backdoor criterion), but are not accounted for in ASV. As a result, <span class="citation" data-cites="heskes_causal_2020">Heskes et al. (<a href="references.html#ref-heskes_causal_2020" role="doc-biblioref">2020</a>)</span> note that even though ASV incorporates causal information, it can sometimes lead to improper (i.e.&nbsp;counter-intuitive) causal explanations.</p>
+<p>One problem with ASV is that a single causal ordering is consistent with multiple graphical causal models. For example, the ordering <span class="math inline">\(\{X_1, X_2\}\)</span> is consistent with both (<a href="background.html#fig-chain" class="quarto-xref">Figure&nbsp;<span>3.1 (a)</span></a>) and (<a href="#fig-asv-alt" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>). If the goal is to generate attributions that recover the causal relationship between <span class="math inline">\(X_1\)</span> on <span class="math inline">\(Y\)</span>, these differences in the underlying graphical causal models are relevant (require different conditioning variables to satisfy the backdoor criterion), but are not accounted for in ASV. As a result, <span class="citation" data-cites="heskes_causal_2020">Heskes et al. (<a href="references.html#ref-heskes_causal_2020" role="doc-biblioref">2020</a>)</span> note that even though ASV incorporates causal information, it can sometimes lead to improper (i.e.&nbsp;counter-intuitive) causal explanations.</p>
 <p>The Shapley values generated by ASV do not map cleanly onto the types of explanatory questions as we have defined based on Pearl-style causality. ASV is not able to address model-level explanations because the estimated Shapley values do not align with an unconditional value function. When any partial causal ordering is provided, ASV is not able to address associative world-level questions because the weights assigned to different permutations lead to Shapley values that differ from those where a uniform weighting is applied. Similarly, these weights lead to values that also do not, in general, match values based on an interventional conditional value function <span class="citation" data-cites="heskes_causal_2020">Heskes et al. (<a href="references.html#ref-heskes_causal_2020" role="doc-biblioref">2020</a>)</span>. Although ASV-based Shapley values may provide valuable insights in other contexts, under our evaluation framework, they should not be used to provide model explanations.</p>
 </section>
 <section id="causal-shapley-values" class="level4" data-number="4.3.2.3">
 <h4 data-number="4.3.2.3" class="anchored" data-anchor-id="causal-shapley-values"><span class="header-section-number">4.3.2.3</span> Causal Shapley Values</h4>
-<p><span class="citation" data-cites="heskes_causal_2020">Heskes et al. (<a href="references.html#ref-heskes_causal_2020" role="doc-biblioref">2020</a>)</span> introduced an extension to ASV that leads to Shapley values that have a proper causal interpretation. Like <span class="citation" data-cites="janzing_feature_2019">Janzing, Minorics, and Blöbaum (<a href="references.html#ref-janzing_feature_2019" role="doc-biblioref">2019</a>)</span>, they define the target Shapley using an interventional conditional value function (<a href="#eq-interventional-value-function">Equation&nbsp;<span>4.2</span></a>). However, their approach is more closely aligned with <span class="citation" data-cites="frye_asymmetric_2020">Frye, Rowat, and Feige (<a href="references.html#ref-frye_asymmetric_2020" role="doc-biblioref">2020</a>)</span> in that they are interested in generating world-level explanations without requiring a full causal graph. Their key idea is to use a partial causal ordering of groups of features along with information about whether features within a group share a common ancestor or mutually-interact to generate a DAG of components, that is used in-lieu of a GCM (also a DAG). As a result, the practitioner does not need to provide a full GCM, but only a causal chain graph, which has a well-defined interventional formula that they derive using Pearl’s do-calculus.</p>
+<p><span class="citation" data-cites="heskes_causal_2020">Heskes et al. (<a href="references.html#ref-heskes_causal_2020" role="doc-biblioref">2020</a>)</span> introduced an extension to ASV that leads to Shapley values that have a proper causal interpretation. Like <span class="citation" data-cites="janzing_feature_2019">Janzing, Minorics, and Blöbaum (<a href="references.html#ref-janzing_feature_2019" role="doc-biblioref">2019</a>)</span>, they define the target Shapley using an interventional conditional value function (<a href="#eq-interventional-value-function" class="quarto-xref">Equation&nbsp;<span>4.2</span></a>). However, their approach is more closely aligned with <span class="citation" data-cites="frye_asymmetric_2020">Frye, Rowat, and Feige (<a href="references.html#ref-frye_asymmetric_2020" role="doc-biblioref">2020</a>)</span> in that they are interested in generating world-level explanations without requiring a full causal graph. Their key idea is to use a partial causal ordering of groups of features along with information about whether features within a group share a common ancestor or mutually-interact to generate a DAG of components, that is used in-lieu of a GCM (also a DAG). As a result, the practitioner does not need to provide a full GCM, but only a causal chain graph, which has a well-defined interventional formula that they derive using Pearl’s do-calculus.</p>
 <p>The authors note that one of the main benefits of CSV is that the resulting explanations are able to differentiate between “direct” and “indirect” causal effects. These ideas are directly related to the indirect influence debate and our notion of levels of explanation. A direct causal effect is the causal effect of a feature on the model’s output. Shapley values based on an unconditional value function are only able to estimate these direct effects. As we noted previously, this means that features that are not functionally used by the model have zero direct effect. In contrast, a feature that is not functionally used may still have a non-zero indirect causal effect. We prefer to view these as providing different levels of explanation: a direct causal effect corresponds to a model-level explanation and an indirect causal effect corresponds to a world-level explanation.</p>
-<p>Another contribution of their work is to clarify that whether a Shapley value is symmetric or asymmetric is a choice that can be made independently of how the value function is specified. While this may be obvious from examining <a href="background.html#eq-permutation-shapley-formula">Equation&nbsp;<span>3.2</span></a> and is well-known in the cooperative game theory literature (asymmetric values are known as quasivalues), it had not been surfaced previously in the Shapley-based model explanation literature.</p>
+<p>Another contribution of their work is to clarify that whether a Shapley value is symmetric or asymmetric is a choice that can be made independently of how the value function is specified. While this may be obvious from examining <a href="background.html#eq-permutation-shapley-formula" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and is well-known in the cooperative game theory literature (asymmetric values are known as quasivalues), it had not been surfaced previously in the Shapley-based model explanation literature.</p>
 <p>CSV has two practical limitations: it requires the explainer to provide substantial auxiliary causal information and requires approximating conditional distributions. The first is problematic as this type of auxiliary causal information simply may not be available because neither the explainer nor the explainee have sufficient domain expertise to provide the necessary information. The second limitation is not unique to CSV, but is still relevant to assessing the correctness of the resulting explanations. One of the alternatives for approximating the necessary conditional distributions proposed by <span class="citation" data-cites="aas_explaining_2020">Aas, Jullum, and Løland (<a href="references.html#ref-aas_explaining_2020" role="doc-biblioref">2020</a>)</span> can be used. However, the considerations with applying one of these approaches that was discussed earlier still apply. When the necessary causal information is available and the required conditional distributions can be approximated, then CSV is a compelling option because it is able to generate explanations that address all types of model-level questions as well as associative and interventional world-level questions.</p>
 </section>
 <section id="shapley-flow" class="level4" data-number="4.3.2.4">
 <h4 data-number="4.3.2.4" class="anchored" data-anchor-id="shapley-flow"><span class="header-section-number">4.3.2.4</span> Shapley Flow</h4>
-<p><span class="citation" data-cites="wang_shapley_2021">Wang, Wiens, and Lundberg (<a href="references.html#ref-wang_shapley_2021" role="doc-biblioref">2021</a>)</span> develop <strong>Shapley Flow</strong>(SF), which extends the set-based Shapley axioms to arbitrary graphs. Like ASV and CSV, they are interested in an approach that is able to generate world-level explanations, and like CSV, SF is able to generate both world and model-level explanations. One of the motivations for SF is that CSV divides the credit between a feature and it’s causal descendents, which they view as a counter-intuitive attribution policy. For example, consider a chain (see <a href="background.html#fig-chain">Figure&nbsp;<span>3.1 (a)</span></a>) where their critique is that CSV splits the credit that should be assigned to <span class="math inline">\(X_1\)</span> between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>. To avoid this issue, they use a rather idiosyncratic game formulation that requires the explainer to provide a structural causal model. The graphical causal model associated with the SCM contains nodes for each feature that is causally-related to the output, whether or not it is functionally used by the model. The edges in the GCM represent one of two things: a functional relationship between the feature and the model output, or a causal relationship between the features whether or not they are used by the model.</p>
+<p><span class="citation" data-cites="wang_shapley_2021">Wang, Wiens, and Lundberg (<a href="references.html#ref-wang_shapley_2021" role="doc-biblioref">2021</a>)</span> develop <strong>Shapley Flow</strong>(SF), which extends the set-based Shapley axioms to arbitrary graphs. Like ASV and CSV, they are interested in an approach that is able to generate world-level explanations, and like CSV, SF is able to generate both world and model-level explanations. One of the motivations for SF is that CSV divides the credit between a feature and it’s causal descendents, which they view as a counter-intuitive attribution policy. For example, consider a chain (see <a href="background.html#fig-chain" class="quarto-xref">Figure&nbsp;<span>3.1 (a)</span></a>) where their critique is that CSV splits the credit that should be assigned to <span class="math inline">\(X_1\)</span> between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>. To avoid this issue, they use a rather idiosyncratic game formulation that requires the explainer to provide a structural causal model. The graphical causal model associated with the SCM contains nodes for each feature that is causally-related to the output, whether or not it is functionally used by the model. The edges in the GCM represent one of two things: a functional relationship between the feature and the model output, or a causal relationship between the features whether or not they are used by the model.</p>
 <p>Shapley Flow departs from the typical game formulation, treating source-to-sink paths in the provided SCM as the players in the game and a partial ordering of these paths as the coalitions. Attributions are assigned to edges, whereas other methods assign credit to individual nodes. The attribution for an individual feature can be computed by summing the attributions of all incoming edges. The importance of each edge is computed by considering how much the model output changes when the edge is added. To simulate edge removal, they introduce the notion of active versus inactive edges. The foreground value is passed when the edge is active and the background value is passed when it is inactive. This foreground value is computed using the equation specified by the SCM. A background value can be a single value or a distribution of values. These background values are similar to BShap/RBShap <span class="citation" data-cites="sundararajan_many_2020">Sundararajan and Najmi (<a href="references.html#ref-sundararajan_many_2020" role="doc-biblioref">2020</a>)</span> and single reference games and reference distributions from <span class="citation" data-cites="merrick_explanation_2020">Merrick and Taly (<a href="references.html#ref-merrick_explanation_2020" role="doc-biblioref">2020</a>)</span>. Using this setup, SF is capable of generating both model and world-level explanations.</p>
-<p>The authors introduce the notion of a “boundary of explanation,” which is a more flexible way of framing the distinction between model and world-level explanations. To make things concrete, consider <a href="#fig-janzing-model-vs-world">Figure&nbsp;<span>4.2</span></a>. One boundary of explanation treats <span class="math inline">\(\hat{Y}\)</span> as the sink node and includes the edges <span class="math inline">\(\{(X_1, \hat{Y}), (X_2, \hat{Y})\)</span>. This boundary leads to model-level explanations. Alternatively, the edges <span class="math inline">\(\{(\tilde{X_1}, X_1), (\tilde{X_2}, X_2)\}\)</span> lead to world-level explanations. One of the Shapley Flow axioms is boundary consistency, which ensures that the attribution for a given edge is the same across different explanation boundaries. Because of this axiom, they assign zero weight to certain orderings and is part of the reason for the idiosyncratic game formulation.</p>
+<p>The authors introduce the notion of a “boundary of explanation,” which is a more flexible way of framing the distinction between model and world-level explanations. To make things concrete, consider <a href="#fig-janzing-model-vs-world" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>. One boundary of explanation treats <span class="math inline">\(\hat{Y}\)</span> as the sink node and includes the edges <span class="math inline">\(\{(X_1, \hat{Y}), (X_2, \hat{Y})\)</span>. This boundary leads to model-level explanations. Alternatively, the edges <span class="math inline">\(\{(\tilde{X_1}, X_1), (\tilde{X_2},
+X_2)\}\)</span> lead to world-level explanations. One of the Shapley Flow axioms is boundary consistency, which ensures that the attribution for a given edge is the same across different explanation boundaries. Because of this axiom, they assign zero weight to certain orderings and is part of the reason for the idiosyncratic game formulation.</p>
 <p>In principle, the SF framework is capable of generating explanations that address both model and world-level explanatory questions of all types (associative, interventional, and counterfactual). However, this power comes at the cost of requiring a structural causal model. As we saw earlier, an SCM is composed of a GCM as well as the functional (mathematical) equations governing the relationships between features. While challenging, it is conceivable that the explainer or explainee may be able to provide a densible GCM, that is, one that is consistent with the data as well as their domain expertise. However, the further practical problem of identifying the functional equations between features still remains. In their examples provided as part of the appendix, <span class="citation" data-cites="wang_shapley_2021">Wang, Wiens, and Lundberg (<a href="references.html#ref-wang_shapley_2021" role="doc-biblioref">2021</a>)</span> approximate these functional relationships by training additional models. Each auxiliary model uses an endogenous feature from the GCM as the outcome and the parents of that feature as the inputs. The number of auxiliary models that must be trained is equal to the number of endogenous variables in the proposed GCM. Although SF is quite powerful, these practical considerations likely make the method infeasible for many use cases.</p>
 </section>
 <section id="recursive-shapley-values" class="level4" data-number="4.3.2.5">
@@ -560,7 +628,7 @@ X2-&gt;Y
 <p>RSV can be used to provide either model or world-level explanations. To generate model-level explanations, the explainer provides a graph where the model features are the source nodes and the model output is the sink node. World-level explanations can be generated by providing a structural causal model, which may include features not functionally used by the model. RSV suffers from the same practical limitations of SF, but is also potentially more computationally expensive. Because RSV is defined recursively, Shapley values for a sequence of games, rather than for a single game, is required.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-aas_explaining_2020" class="csl-entry" role="listitem">
 Aas, Kjersti, Martin Jullum, and Anders Løland. 2020. <span>“Explaining Individual Predictions When Features Are Dependent: <span>More</span> Accurate Approximations to <span>Shapley</span> Values.”</span> <em>arXiv:1903.10464 [Cs, Stat]</em>, February. <a href="http://arxiv.org/abs/1903.10464">http://arxiv.org/abs/1903.10464</a>.
 </div>
@@ -690,18 +758,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -733,11 +790,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -747,8 +843,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -760,7 +865,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -804,6 +1032,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -829,6 +1058,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -890,17 +1145,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./background.html" class="pagination-link">
+      <a href="./background.html" class="pagination-link" aria-label="Background">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Background</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./discussion.html" class="pagination-link">
+      <a href="./discussion.html" class="pagination-link" aria-label="Discussion">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Discussion</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
